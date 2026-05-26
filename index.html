@@ -6,9 +6,7 @@
 <title>Crystalized Hub</title>
 
 <!-- ============== FAVICON ============== -->
-<!-- Inline SVG favicon (instant, no extra request, perfect crispness at any size) -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><defs><linearGradient id='a' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23b4ffda'/><stop offset='100%25' stop-color='%2300e676'/></linearGradient><linearGradient id='b' x1='1' y1='0' x2='0' y2='1'><stop offset='0%25' stop-color='%2300c853'/><stop offset='100%25' stop-color='%2300e676'/></linearGradient></defs><path d='M24 3 L40 15 L24 27 L8 15 Z' fill='url(%23a)' opacity='.95'/><path d='M24 27 L40 15 L36 39 L24 45 L12 39 L8 15 Z' fill='url(%23b)' opacity='.65'/><path d='M24 3 L24 45 M8 15 L24 27 L40 15 M12 39 L24 27 L36 39' stroke='rgba(255,255,255,.25)' stroke-width='.8' fill='none'/></svg>">
-<!-- File-based fallbacks for browsers that prefer them -->
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
 <link rel="apple-touch-icon" sizes="512x512" href="favicon-512.png">
@@ -60,7 +58,6 @@
 
   body, a, button, .game-header, .tab-btn, .copy-btn, .discord-btn, .copy-invite-btn, .preview-link { cursor: none !important; }
 
-  /* Custom cursor */
   .cursor-ring {
     position: fixed;
     top: 0; left: 0;
@@ -101,7 +98,6 @@
     .cursor-ring, .cursor-point { display: none !important; }
   }
 
-  /* Faint grid background */
   #grid-bg {
     position: fixed;
     inset: 0;
@@ -122,7 +118,6 @@
     pointer-events: none;
   }
 
-  /* === VISITOR COUNTER === */
   .visitor-counter {
     display: inline-flex;
     align-items: center;
@@ -524,7 +519,6 @@
     padding-top: 6px;
   }
 
-  /* === Preview link === */
   .preview-link {
     position: relative;
     display: flex;
@@ -1285,7 +1279,10 @@ if (IS_TOUCH) {
 
 /* ================= GLOBAL STAT COUNTERS ================= */
 (function(){
-  const NS  = 'crystalized-hub-v1';
+  // *** Fresh namespace so the server counter starts at 70,000 for EVERYONE ***
+  // (the old v1 counter had drifted and different browsers were stuck on
+  //  different cached numbers — v2 wipes the slate clean.)
+  const NS  = 'crystalized-hub-v2';
   const API = 'https://abacus.jasoncameron.dev';
   const EXEC_INIT = 70000;
 
@@ -1313,12 +1310,10 @@ if (IS_TOUCH) {
       el.textContent = fmt(to);
       return;
     }
-    // Cancel any in-flight tween for this element
     const prev = tweens.get(el);
     if(prev) cancelAnimationFrame(prev);
 
     const diff = Math.abs(to - from);
-    // Faster for small increments (typical +1 hit), longer for big resync jumps
     const duration = Math.min(1500, 380 + Math.min(diff, 200) * 6);
     const start = performance.now();
 
@@ -1338,20 +1333,13 @@ if (IS_TOUCH) {
     bump(el);
   }
 
-  function lsGet(k, def){
-    try { const v = parseInt(localStorage.getItem('crys_' + k), 10); return isFinite(v) ? v : def; }
-    catch(e){ return def; }
-  }
-  function lsSet(k, v){
-    try { localStorage.setItem('crys_' + k, String(v)); } catch(e){}
-  }
-
-  /* ---------- EXECUTIONS (server-persisted + LIVE polling) ---------- */
-  let executions = lsGet('executions', EXEC_INIT);
-  execEl.textContent = fmt(executions);
-
-  let pendingLocalBumps = 0;     // hits we fired locally that the server hasn't confirmed yet
-  let inflightLiveFetch = false; // prevent overlapping polls
+  /* ---------- EXECUTIONS (server-only, no local cache) ----------
+     IMPORTANT: We removed all localStorage usage for this counter.
+     Every page load and every poll uses the SERVER value directly,
+     so two different browsers always show the same number.
+  ---------------------------------------------------------------- */
+  let executions = null;          // null until the first server fetch lands
+  let inflightLiveFetch = false;
 
   async function fetchLiveExecutions(animateChanges){
     if(inflightLiveFetch) return;
@@ -1361,30 +1349,28 @@ if (IS_TOUCH) {
       const j = await r.json();
       if(j && typeof j.value === 'number'){
         const serverVal = j.value;
-        // Only ever go UP (never appear to lose count). If our local optimistic
-        // value is higher because of unconfirmed hits, keep the higher one.
-        const newVal = Math.max(serverVal, executions);
-        if(newVal !== executions){
+        if(executions === null){
+          // First successful fetch — paint immediately, no animation
+          executions = serverVal;
+          execEl.textContent = fmt(executions);
+        } else if(serverVal !== executions){
           const oldVal = executions;
-          executions = newVal;
-          lsSet('executions', executions);
-          tweenStat(execEl, oldVal, newVal, animateChanges);
+          executions = serverVal;        // trust the server, always
+          tweenStat(execEl, oldVal, serverVal, animateChanges);
         }
       }
     } catch(e){
-      /* offline / blocked */
+      /* offline / blocked — just keep showing what we had */
     } finally {
       inflightLiveFetch = false;
     }
   }
 
-  // First fetch — ensure counter exists, then load + start polling
   (async function initExec(){
     try {
       await fetch(API + '/create/' + NS + '/executions?initializer=' + EXEC_INIT + '&enable_reset=false', { cache: 'no-store' }).catch(function(){});
     } catch(e){}
     await fetchLiveExecutions(false); // first paint, no animation
-    // LIVE: poll every 4 seconds while the tab is visible
     setInterval(function(){
       if(document.visibilityState === 'visible'){
         fetchLiveExecutions(true);
@@ -1392,7 +1378,6 @@ if (IS_TOUCH) {
     }, 4000);
   })();
 
-  // Immediate refresh when the tab becomes visible again (mobile/desktop)
   document.addEventListener('visibilitychange', function(){
     if(document.visibilityState === 'visible'){
       fetchLiveExecutions(true);
@@ -1401,23 +1386,18 @@ if (IS_TOUCH) {
 
   // Public hook called by Copy button
   window.__incrementExecutions = async function(){
-    const oldVal = executions;
-    executions += 1;
-    pendingLocalBumps += 1;
-    lsSet('executions', executions);
-    tweenStat(execEl, oldVal, executions, true);
     try {
+      // Hit the server — it returns the new authoritative value.
       const r = await fetch(API + '/hit/' + NS + '/executions', { cache: 'no-store' });
       const j = await r.json();
-      pendingLocalBumps = Math.max(0, pendingLocalBumps - 1);
-      if(j && typeof j.value === 'number' && j.value > executions){
-        const before = executions;
-        executions = j.value;
-        lsSet('executions', executions);
-        tweenStat(execEl, before, executions, true);
+      if(j && typeof j.value === 'number'){
+        const oldVal = (executions === null) ? (j.value - 1) : executions;
+        executions = j.value;            // trust the server
+        tweenStat(execEl, oldVal, executions, true);
       }
     } catch(e){
-      pendingLocalBumps = Math.max(0, pendingLocalBumps - 1);
+      // If the hit fails, we just don't move the number. The next poll
+      // (within 4s) will pick up the real value anyway if it ever lands.
     }
   };
 
@@ -1669,5 +1649,5 @@ animate();
 window.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; });
 window.addEventListener('click', function(e){ bursts.push(new Burst(e.clientX,e.clientY)); });
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a02064e968631d29',t:'MTc3OTgzNjQwNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0207362af922565',t:'MTc3OTgzNzAwMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
