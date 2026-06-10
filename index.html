@@ -11,386 +11,389 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-        
-        .font-display {
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            font-weight: 600;
-        }
-        .nav-tab {
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            padding-left: 1.25rem;
-            padding-right: 1.25rem;
-        }
-        
-        .nav-tab.active {
-            color: white;
-        }
-        
-        .nav-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 6px;
-            background: #a5b4fc;
-            border-radius: 9999px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .section {
-            display: none;
-        }
-        
-        .section.active {
-            display: block;
-            animation: fadeInScale 0.4s ease forwards;
-        }
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: translateY(15px) scale(0.985); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .download-counter {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "ss02";
-        }
-        .btn-download {
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-        }
-        
-        .btn-download:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
-        }
-        .glass {
-            background: rgba(255,255,255, 0.035);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255,255,255,0.07);
-        }
-        .feature-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2);
-        }
-        .progress-bar {
-            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        @media (max-width: 768px) {
-            .download-counter {
-                font-size: 72px !important;
-            }
-            .nav-tab {
-                padding-left: 1rem;
-                padding-right: 1rem;
-                font-size: 0.875rem;
-            }
-        }
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.4s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px) scale(0.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .counter-num { font-variant-numeric: tabular-nums; font-feature-settings: "ss02"; }
+        .nav-pill { transition: all 0.2s ease; }
+        .nav-pill.active { color: white; }
+        .nav-pill.active::after { content: ''; position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background: #a5b4fc; border-radius: 9999px; }
+        .dl-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3); }
+        .dl-btn:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3); }
+        .feature-card { transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1); }
+        .feature-card:hover { transform: translateY(-8px) scale(1.015); box-shadow: 0 16px 32px -8px rgb(0 0 0 / 0.4); border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.055); }
+        .discord-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3); }
+        .discord-btn:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3); }
+        .bar-fill { transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .gold-orb { position: absolute; border-radius: 9999px; pointer-events: none; }
+        .gold-vein { position: absolute; left: 0; right: 0; height: 1px; pointer-events: none; }
     </style>
 </head>
-<body class="bg-zinc-950 text-zinc-200">
-    <nav class="border-b border-white/10 bg-zinc-950/90 backdrop-blur-2xl sticky top-0 z-50">
-        <div class="max-w-screen-xl mx-auto px-6 md:px-8">
-            <div class="flex items-center justify-between md:justify-start h-20 relative">
-                <div class="flex items-center gap-x-3 z-10 shrink-0">
-                    <div class="w-11 h-11 md:w-12 md:h-12 rounded-3xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
-                        <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2aa2ec&is=6a29516c&hm=302647f3703a5489ab54d12c8117b696810ba8288ca47a6531bea35b63729e55&=&format=webp&quality=lossless&width=884&height=884" 
-                             alt="Swift Logo" class="w-full h-full object-cover">
-                    </div>
-                    <div class="hidden sm:block">
-                        <span class="font-display text-3xl md:text-4xl font-semibold tracking-tighter">Swift</span>
-                    </div>
-                </div>
-                <div class="md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
-                    <div class="flex items-center gap-x-1 bg-zinc-900/70 border border-white/10 rounded-3xl p-1">
-                        <button onclick="switchTab('download')" id="tab-download"
-                                class="nav-tab active px-6 py-2.5 text-sm font-semibold rounded-3xl flex items-center gap-x-2">
-                            <i class="fa-solid fa-download"></i>
-                            <span class="hidden sm:inline">Download</span>
-                        </button>
-                        <button onclick="switchTab('features')" id="tab-features"
-                                class="nav-tab px-6 py-2.5 text-sm font-semibold rounded-3xl flex items-center gap-x-2 text-zinc-400 hover:text-zinc-200">
-                            <i class="fa-solid fa-list-check"></i>
-                            <span class="hidden sm:inline">Features</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <div id="download" class="section active max-w-screen-xl mx-auto px-6 md:px-8 pt-10 md:pt-14 pb-16 md:pb-20">
-        <div class="max-w-2xl mx-auto text-center">
-            <div class="mb-8 md:mb-10">
-                <div class="inline-flex items-center gap-x-2 px-4 py-1 rounded-3xl bg-zinc-900 border border-white/10 mb-5">
-                    <span class="text-xs font-semibold tracking-widest text-emerald-400">V1 • KEYLESS</span>
-                </div>
-                
-                <h1 class="font-display text-6xl md:text-7xl font-semibold tracking-[-3.5px] leading-none mb-4">
-                    The cleanest<br>executor ever made.
-                </h1>
-                <p class="text-lg md:text-xl text-zinc-400">Fast. Undetected. Reliable.</p>
-            </div>
-            <div class="glass rounded-3xl p-8 md:p-10 mb-8">
-                <div class="mb-7">
-                    <div class="flex items-center justify-center gap-x-2 mb-2">
-                        <i class="fa-solid fa-globe text-emerald-400"></i>
-                        <span class="uppercase text-xs font-bold tracking-[3px] text-emerald-400">GLOBAL DOWNLOADS</span>
-                    </div>
-                    <div id="download-counter" 
-                         class="download-counter text-[92px] md:text-[110px] font-display font-semibold tabular-nums tracking-[-6px] text-white leading-none">
-                        0
-                    </div>
-                    <div class="text-sm text-zinc-500 mt-1 font-medium">total downloads worldwide</div>
-                </div>
-                <div class="pt-7 border-t border-white/10">
-                    <div class="flex flex-col md:flex-row items-start md:items-end justify-center gap-y-8 gap-x-8 max-w-[620px] mx-auto px-2">
-                        <div class="w-full md:w-auto">
-                            <div class="flex justify-between items-end mb-1.5">
-                                <span class="text-4xl font-semibold text-amber-400 tracking-tighter">100%</span>
-                                <span class="text-xs text-amber-400/70 font-bold tracking-wider ml-3">UPTIME</span>
-                            </div>
-                            <div class="h-[5px] bg-amber-900/40 rounded-full overflow-hidden w-full md:w-36">
-                                <div class="progress-bar h-full bg-amber-400 w-[100%] rounded-full"></div>
-                            </div>
-                        </div>
-                        <div class="w-full md:w-auto pt-2 md:pt-0">
-                            <div>
-                                <span class="text-4xl font-semibold text-emerald-400 tracking-tighter">UNDETECTED</span>
-                            </div>
-                            <div class="text-xs text-emerald-400/70 font-medium mt-0.5">Since launch</div>
-                        </div>
-                        <div class="w-full md:w-auto">
-                            <div class="flex justify-between items-end mb-1.5">
-                                <span class="text-4xl font-semibold text-rose-400 tracking-tighter">100%</span>
-                                <span class="text-xs text-rose-400/70 font-bold tracking-wider ml-3">SUNC RATE</span>
-                            </div>
-                            <div class="h-[5px] bg-rose-900/40 rounded-full overflow-hidden w-full md:w-36">
-                                <div class="progress-bar h-full bg-rose-400 w-[100%] rounded-full"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-8 rounded-3xl overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl">
-                <div class="relative">
-                    <img src="https://media.discordapp.net/attachments/1513518434997243924/1514288250607505508/image.png?ex=6a2ad255&is=6a2980d5&hm=1b232a988950b814c0d5cae66c7f9d0b51c8bae41f11d55b24f75611f8ade8cd&=&format=webp&quality=lossless&width=550&height=336" 
-                         alt="Swift UI Preview" class="w-full h-auto block">
-                    <div class="absolute inset-4 border border-white/10 rounded-2xl opacity-30 pointer-events-none"></div>
-                </div>
-            </div>
-            <div class="max-w-lg mx-auto">
-                <button onclick="triggerDownload()"
-                        class="btn-download group w-full flex items-center bg-white hover:bg-zinc-100 active:bg-zinc-200 text-zinc-900 px-8 py-5 md:py-[22px] rounded-3xl text-xl font-semibold shadow-2xl">
-                    
-                    <div class="w-11 h-11 flex-shrink-0 rounded-2xl overflow-hidden ring-1 ring-zinc-900/20 mr-4">
-                        <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2aa2ec&is=6a29516c&hm=302647f3703a5489ab54d12c8117b696810ba8288ca47a6531bea35b63729e55&=&format=webp&quality=lossless&width=884&height=884" 
-                             class="w-full h-full object-cover" alt="Swift">
-                    </div>
-                    
-                    <div class="flex-1 text-left">
-                        <span class="font-semibold text-2xl tracking-tight">Download Swift</span>
-                        <div class="text-zinc-600 text-xs font-medium -mt-0.5">V1 • 0 MB</div>
-                    </div>
-                    
-                    <i class="fa-solid fa-arrow-down text-2xl group-active:translate-y-0.5 transition-transform ml-1"></i>
-                </button>
-                
-                <div class="mt-4 text-xs text-zinc-500 flex items-center justify-center gap-x-2">
-                    <i class="fa-solid fa-shield-halved text-emerald-400"></i>
-                    <span>Verified • Signed • Safe</span>
-                </div>
-            </div>
-            <div class="mt-6 max-w-lg mx-auto">
-                <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 px-5 py-4">
-                    <div class="flex items-start gap-x-3">
-                        <i class="fa-solid fa-circle-info text-amber-400 mt-0.5 text-base"></i>
-                        <p class="text-sm text-amber-200/80 text-left leading-relaxed">
-                            To get this executor, you need to complete a checkpoint system. This is how we earn revenue to keep the project running. Please do not attempt to share loaders, as they will not work for other users.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-8 text-[10px] text-zinc-500 font-medium tracking-wider">
-                Swift is not affiliated with Roblox Corporation in any way.
-            </div>
+<body class="bg-zinc-950 text-zinc-200 min-h-screen">
+
+    <div id="gold-bg" class="fixed inset-0 pointer-events-none overflow-hidden" style="z-index:0">
+        <div class="gold-orb" style="width:600px;height:350px;top:-5%;left:8%;background:radial-gradient(ellipse,rgba(200,165,50,0.07) 0%,transparent 70%);filter:blur(80px)"></div>
+        <div class="gold-orb" style="width:500px;height:300px;top:8%;right:5%;background:radial-gradient(ellipse,rgba(185,150,45,0.055) 0%,transparent 70%);filter:blur(90px);transform:rotate(30deg)"></div>
+        <div class="gold-orb" style="width:700px;height:250px;top:35%;left:30%;background:radial-gradient(ellipse,rgba(190,155,50,0.045) 0%,transparent 70%);filter:blur(100px)"></div>
+        <div class="gold-orb" style="width:450px;height:400px;bottom:15%;left:3%;background:radial-gradient(ellipse,rgba(175,140,40,0.06) 0%,transparent 70%);filter:blur(85px);transform:rotate(-15deg)"></div>
+        <div class="gold-orb" style="width:550px;height:320px;bottom:5%;right:10%;background:radial-gradient(ellipse,rgba(195,160,55,0.05) 0%,transparent 70%);filter:blur(95px);transform:rotate(20deg)"></div>
+        <div class="gold-orb" style="width:300px;height:300px;top:55%;right:35%;background:radial-gradient(circle,rgba(210,175,60,0.04) 0%,transparent 65%);filter:blur(70px)"></div>
+        <div style="position:absolute;inset:0;opacity:0.35">
+            <div class="gold-vein" style="top:18%;background:linear-gradient(90deg,transparent 5%,rgba(200,170,60,0.15) 25%,rgba(180,150,50,0.08) 50%,rgba(200,170,60,0.12) 75%,transparent 95%);transform:rotate(12deg)"></div>
+            <div class="gold-vein" style="top:42%;background:linear-gradient(90deg,transparent 10%,rgba(190,160,55,0.12) 30%,transparent 55%,rgba(185,155,50,0.1) 80%,transparent 95%);transform:rotate(-6deg)"></div>
+            <div class="gold-vein" style="top:65%;background:linear-gradient(90deg,transparent 0%,rgba(195,165,55,0.1) 20%,rgba(175,145,45,0.14) 45%,transparent 70%);transform:rotate(18deg)"></div>
+            <div class="gold-vein" style="top:80%;background:linear-gradient(90deg,transparent 15%,rgba(180,150,50,0.08) 40%,rgba(200,170,60,0.12) 65%,transparent 90%);transform:rotate(-10deg)"></div>
+            <div class="gold-vein" style="top:30%;background:linear-gradient(90deg,transparent 20%,rgba(210,180,65,0.1) 50%,transparent 80%);transform:rotate(25deg)"></div>
         </div>
     </div>
-    <div id="features" class="section max-w-screen-xl mx-auto px-6 md:px-8 pt-10 md:pt-14 pb-16 md:pb-20">
-        <div class="max-w-xl mx-auto text-center mb-10">
-            <h2 class="font-display text-5xl md:text-6xl font-semibold tracking-[-2.5px]">Everything you need.</h2>
-            <p class="text-zinc-400 mt-3">What we offer.</p>
-        </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-6xl mx-auto">
-            <div class="feature-card glass rounded-3xl p-6 border border-white/10">
-                <i class="fa-solid fa-search text-2xl text-indigo-400 mb-4"></i>
-                <h4 class="font-semibold text-xl mb-1">Decompiler</h4>
-                <p class="text-sm text-zinc-400">Full bytecode decompiler with clean output.</p>
+
+    <div class="relative" style="z-index:1">
+
+        <nav class="border-b border-white/10 bg-zinc-950/80 backdrop-blur-2xl sticky top-0 z-50">
+            <div class="max-w-screen-xl mx-auto px-5 sm:px-6 md:px-8">
+                <div class="flex items-center justify-between md:justify-start h-16 sm:h-20 relative">
+                    <div class="flex items-center gap-x-2.5 sm:gap-x-3 z-10 shrink-0">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-2xl sm:rounded-3xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
+                            <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2aa2ec&is=6a29516c&hm=302647f3703a5489ab54d12c8117b696810ba8288ca47a6531bea35b63729e55&=&format=webp&quality=lossless&width=884&height=884" alt="Swift" class="w-full h-full object-cover">
+                        </div>
+                        <span class="hidden sm:block font-display text-2xl sm:text-3xl md:text-4xl tracking-tighter">Swift</span>
+                    </div>
+                    <div class="md:absolute md:left-1/2 md:-translate-x-1/2">
+                        <div class="flex items-center gap-x-0.5 sm:gap-x-1 bg-zinc-900/70 border border-white/10 rounded-full p-0.5 sm:p-1">
+                            <button onclick="switchTab('download')" id="tab-download" class="nav-pill active relative px-3 sm:px-5 md:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-full flex items-center gap-x-1.5 sm:gap-x-2">
+                                <i class="fa-solid fa-download"></i>
+                                <span class="hidden sm:inline">Download</span>
+                            </button>
+                            <button onclick="switchTab('features')" id="tab-features" class="nav-pill relative px-3 sm:px-5 md:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-full flex items-center gap-x-1.5 sm:gap-x-2 text-zinc-500 hover:text-zinc-200">
+                                <i class="fa-solid fa-list-check"></i>
+                                <span class="hidden sm:inline">Features</span>
+                            </button>
+                            <button onclick="switchTab('support')" id="tab-support" class="nav-pill relative px-3 sm:px-5 md:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-full flex items-center gap-x-1.5 sm:gap-x-2 text-zinc-500 hover:text-zinc-200">
+                                <i class="fa-solid fa-headset"></i>
+                                <span class="hidden sm:inline">Support</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="feature-card glass rounded-3xl p-6 border border-white/10">
-                <i class="fa-solid fa-layer-group text-2xl text-sky-400 mb-4"></i>
-                <h4 class="font-semibold text-xl mb-1">MultiInstance</h4>
-                <p class="text-sm text-zinc-400">Run multiple instances simultaneously.</p>
+        </nav>
+
+        <main class="max-w-screen-xl mx-auto px-5 sm:px-6 md:px-8 pt-8 sm:pt-10 md:pt-14 pb-14 sm:pb-16 md:pb-20">
+
+            <div id="download" class="section active">
+                <div class="max-w-2xl mx-auto text-center">
+                    <div class="mb-6 sm:mb-8 md:mb-10">
+                        <div class="inline-flex items-center gap-x-2 px-3 sm:px-4 py-1 rounded-full bg-zinc-900 border border-white/10 mb-4 sm:mb-5">
+                            <span class="text-[10px] sm:text-xs font-semibold tracking-widest text-emerald-400">V1 • KEYLESS</span>
+                        </div>
+                        <h1 class="font-display text-4xl sm:text-6xl md:text-7xl tracking-[-2px] sm:tracking-[-3.5px] leading-none mb-3 sm:mb-4">
+                            The cleanest<br>executor ever made.
+                        </h1>
+                        <p class="text-base sm:text-lg md:text-xl text-zinc-400">Fast. Undetected. Reliable.</p>
+                    </div>
+
+                    <div class="rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 mb-6 sm:mb-8 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.07]">
+                        <div class="mb-5 sm:mb-7">
+                            <div class="flex items-center justify-center gap-x-2 mb-2">
+                                <i class="fa-solid fa-globe text-emerald-400 text-xs sm:text-sm"></i>
+                                <span class="uppercase text-[10px] sm:text-xs font-bold tracking-[2px] sm:tracking-[3px] text-emerald-400">GLOBAL DOWNLOADS</span>
+                            </div>
+                            <div id="counter-display" class="counter-num font-display text-[56px] sm:text-[80px] md:text-[110px] tracking-[-4px] sm:tracking-[-6px] text-white leading-none">
+                                0
+                            </div>
+                            <div class="text-xs sm:text-sm text-zinc-500 mt-1 font-medium">total downloads worldwide</div>
+                        </div>
+
+                        <div class="pt-5 sm:pt-7 border-t border-white/10">
+                            <div class="flex flex-col md:flex-row items-start md:items-end justify-center gap-y-6 sm:gap-y-8 gap-x-8 max-w-[620px] mx-auto px-1 sm:px-2">
+                                <div class="w-full md:w-auto">
+                                    <div class="flex justify-between items-end mb-1.5">
+                                        <span class="text-2xl sm:text-4xl font-semibold text-amber-400 tracking-tighter">100%</span>
+                                        <span class="text-[10px] sm:text-xs text-amber-400/70 font-bold tracking-wider ml-3">UPTIME</span>
+                                    </div>
+                                    <div class="h-[4px] sm:h-[5px] bg-amber-900/40 rounded-full overflow-hidden w-full md:w-36">
+                                        <div class="bar-fill h-full bg-amber-400 w-full rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="w-full md:w-auto pt-1 sm:pt-2 md:pt-0">
+                                    <span class="text-2xl sm:text-4xl font-semibold text-emerald-400 tracking-tighter">UNDETECTED</span>
+                                    <div class="text-[10px] sm:text-xs text-emerald-400/70 font-medium mt-0.5">Since launch</div>
+                                </div>
+                                <div class="w-full md:w-auto">
+                                    <div class="flex justify-between items-end mb-1.5">
+                                        <span class="text-2xl sm:text-4xl font-semibold text-rose-400 tracking-tighter">100%</span>
+                                        <span class="text-[10px] sm:text-xs text-rose-400/70 font-bold tracking-wider ml-3">SUNC RATE</span>
+                                    </div>
+                                    <div class="h-[4px] sm:h-[5px] bg-rose-900/40 rounded-full overflow-hidden w-full md:w-36">
+                                        <div class="bar-fill h-full bg-rose-400 w-full rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6 sm:mb-8 rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl">
+                        <div class="relative">
+                            <img src="https://media.discordapp.net/attachments/1513518434997243924/1514288250607505508/image.png?ex=6a2ad255&is=6a2980d5&hm=1b232a988950b814c0d5cae66c7f9d0b51c8bae41f11d55b24f75611f8ade8cd&=&format=webp&quality=lossless&width=550&height=336" alt="Swift UI Preview" class="w-full h-auto block">
+                            <div class="absolute inset-2 sm:inset-4 border border-white/10 rounded-xl sm:rounded-2xl opacity-30 pointer-events-none"></div>
+                        </div>
+                    </div>
+
+                    <div class="max-w-lg mx-auto">
+                        <button id="download-btn" onclick="handleDownload()" class="dl-btn group w-full flex items-center px-5 sm:px-8 py-4 sm:py-5 md:py-[22px] rounded-2xl sm:rounded-3xl text-lg sm:text-xl font-semibold bg-white hover:bg-zinc-100 active:bg-zinc-200">
+                            <div class="w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-xl sm:rounded-2xl overflow-hidden ring-1 ring-zinc-900/20 mr-3 sm:mr-4">
+                                <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2aa2ec&is=6a29516c&hm=302647f3703a5489ab54d12c8117b696810ba8288ca47a6531bea35b63729e55&=&format=webp&quality=lossless&width=884&height=884" class="w-full h-full object-cover" alt="Swift">
+                            </div>
+                            <div class="flex-1 text-left min-w-0">
+                                <span class="font-semibold text-xl sm:text-2xl tracking-tight text-zinc-900 block truncate">Download Swift</span>
+                                <div class="text-zinc-600 text-[10px] sm:text-xs font-medium -mt-0.5">V1 • 0 MB</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-down text-xl sm:text-2xl text-zinc-900 group-active:translate-y-0.5 transition-transform ml-1"></i>
+                        </button>
+                        <div class="mt-3 sm:mt-4 text-[10px] sm:text-xs text-zinc-500 flex items-center justify-center gap-x-2">
+                            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                            <span>Verified • Signed • Safe</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 sm:mt-6 max-w-lg mx-auto flex flex-col gap-2.5 sm:gap-3">
+                        <div class="rounded-xl sm:rounded-2xl border border-amber-500/20 bg-amber-500/5 px-4 sm:px-5 py-3 sm:py-4">
+                            <div class="flex items-start gap-x-2.5 sm:gap-x-3">
+                                <i class="fa-solid fa-circle-info text-amber-400 mt-0.5 text-sm"></i>
+                                <p class="text-xs sm:text-sm text-amber-200/80 text-left leading-relaxed">
+                                    To get this executor, you need to complete a checkpoint system. This is how we earn revenue to keep the project running. Please do not attempt to share loaders, as they will not work for other users.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="rounded-xl sm:rounded-2xl border border-zinc-700/40 bg-zinc-800/30 px-4 sm:px-5 py-3 sm:py-3.5">
+                            <div class="flex items-center gap-x-2.5 sm:gap-x-3">
+                                <i class="fa-solid fa-desktop text-zinc-400 text-sm"></i>
+                                <p class="text-xs sm:text-sm text-zinc-400 text-left">This is currently for desktop only.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 sm:mt-8 text-[9px] sm:text-[10px] text-zinc-500 font-medium tracking-wider">
+                        Swift is not affiliated with Roblox Corporation in any way.
+                    </div>
+                </div>
             </div>
-            
-            <div class="feature-card glass rounded-3xl p-6 border border-white/10">
-                <i class="fa-solid fa-user-secret text-2xl text-emerald-400 mb-4"></i>
-                <h4 class="font-semibold text-xl mb-1">Undetected</h4>
-                <p class="text-sm text-zinc-400">Advanced anti-detection system.</p>
+
+            <div id="features" class="section">
+                <div class="max-w-xl mx-auto text-center mb-8 sm:mb-10">
+                    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl tracking-[-2px] sm:tracking-[-2.5px]">Everything you need.</h2>
+                    <p class="text-zinc-400 mt-2 sm:mt-3 text-sm sm:text-base">What we offer.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 max-w-6xl mx-auto">
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
+                        <i class="fa-solid fa-search text-xl sm:text-2xl text-indigo-400 mb-3 sm:mb-4 block"></i>
+                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Decompiler</h4>
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Full bytecode decompiler with clean output.</p>
+                    </div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
+                        <i class="fa-solid fa-layer-group text-xl sm:text-2xl text-sky-400 mb-3 sm:mb-4 block"></i>
+                        <h4 class="font-semibold text-lg sm:text-xl mb-1">MultiInstance</h4>
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Run multiple instances simultaneously.</p>
+                    </div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
+                        <i class="fa-solid fa-user-secret text-xl sm:text-2xl text-emerald-400 mb-3 sm:mb-4 block"></i>
+                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Undetected</h4>
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Advanced anti-detection system.</p>
+                    </div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
+                        <i class="fa-solid fa-sync text-xl sm:text-2xl text-violet-400 mb-3 sm:mb-4 block"></i>
+                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Always Updated</h4>
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Weekly updates with new features.</p>
+                    </div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
+                        <i class="fa-solid fa-sliders-h text-xl sm:text-2xl text-amber-400 mb-3 sm:mb-4 block"></i>
+                        <h4 class="font-semibold text-lg sm:text-xl mb-1">QOL Changes</h4>
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Quality of life improvements everywhere.</p>
+                    </div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
+                        <i class="fa-solid fa-cog text-xl sm:text-2xl text-rose-400 mb-3 sm:mb-4 block"></i>
+                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Settings</h4>
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Deep customization options.</p>
+                    </div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
+                        <i class="fa-solid fa-plug text-xl sm:text-2xl text-teal-400 mb-3 sm:mb-4 block"></i>
+                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Script Hub</h4>
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Built-in verified script library.</p>
+                    </div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
+                        <i class="fa-solid fa-shield-alt text-xl sm:text-2xl text-orange-400 mb-3 sm:mb-4 block"></i>
+                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Memory Protection</h4>
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Advanced memory shielding.</p>
+                    </div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
+                        <i class="fa-solid fa-terminal text-xl sm:text-2xl text-lime-400 mb-3 sm:mb-4 block"></i>
+                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Console</h4>
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Powerful built-in developer console.</p>
+                    </div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
+                        <i class="fa-solid fa-globe text-xl sm:text-2xl text-blue-400 mb-3 sm:mb-4 block"></i>
+                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Auto-Update</h4>
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Seamless background updates.</p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="feature-card glass rounded-3xl p-6 border border-white/10">
-                <i class="fa-solid fa-sync text-2xl text-violet-400 mb-4"></i>
-                <h4 class="font-semibold text-xl mb-1">Always Updated</h4>
-                <p class="text-sm text-zinc-400">Weekly updates with new features.</p>
+
+            <div id="support" class="section">
+                <div class="max-w-xl mx-auto text-center">
+                    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl tracking-[-2px] sm:tracking-[-2.5px] mb-2 sm:mb-3">Get support.</h2>
+                    <p class="text-zinc-400 mb-8 sm:mb-10 text-sm sm:text-base">Join the community for help, updates, and more.</p>
+
+                    <div class="rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.07]">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-5 sm:mb-6 rounded-2xl sm:rounded-3xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
+                            <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2aa2ec&is=6a29516c&hm=302647f3703a5489ab54d12c8117b696810ba8288ca47a6531bea35b63729e55&=&format=webp&quality=lossless&width=884&height=884" alt="Swift" class="w-full h-full object-cover">
+                        </div>
+
+                        <h3 class="font-display text-xl sm:text-2xl mb-1">Swift Community</h3>
+                        <p class="text-zinc-400 text-xs sm:text-sm mb-5 sm:mb-6">Official Discord Server</p>
+
+                        <div id="member-count" class="hidden items-center gap-x-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-zinc-800/60 border border-white/10 mb-6 sm:mb-8 justify-center inline-flex">
+                            <span class="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-full w-full bg-emerald-400"></span>
+                            </span>
+                            <span id="member-num" class="text-xs sm:text-sm font-semibold text-zinc-200">0 members</span>
+                        </div>
+
+                        <div>
+                            <a href="https://discord.gg/RsBMBwUHd7" target="_blank" rel="noopener noreferrer" class="discord-btn inline-flex items-center gap-x-2.5 sm:gap-x-3 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg font-semibold bg-[#5865F2] hover:bg-[#4752C4] active:bg-[#3C45A5]">
+                                <i class="fa-brands fa-discord text-xl sm:text-2xl"></i>
+                                <span>Join Discord</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs sm:text-sm opacity-60"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="feature-card glass rounded-3xl p-6 border border-white/10">
-                <i class="fa-solid fa-sliders-h text-2xl text-amber-400 mb-4"></i>
-                <h4 class="font-semibold text-xl mb-1">QOL Changes</h4>
-                <p class="text-sm text-zinc-400">Quality of life improvements everywhere.</p>
-            </div>
-            
-            <div class="feature-card glass rounded-3xl p-6 border border-white/10">
-                <i class="fa-solid fa-cog text-2xl text-rose-400 mb-4"></i>
-                <h4 class="font-semibold text-xl mb-1">Settings</h4>
-                <p class="text-sm text-zinc-400">Deep customization options.</p>
-            </div>
-            
-            <div class="feature-card glass rounded-3xl p-6 border border-white/10">
-                <i class="fa-solid fa-plug text-2xl text-teal-400 mb-4"></i>
-                <h4 class="font-semibold text-xl mb-1">Script Hub</h4>
-                <p class="text-sm text-zinc-400">Built-in verified script library.</p>
-            </div>
-            
-            <div class="feature-card glass rounded-3xl p-6 border border-white/10">
-                <i class="fa-solid fa-shield-alt text-2xl text-orange-400 mb-4"></i>
-                <h4 class="font-semibold text-xl mb-1">Memory Protection</h4>
-                <p class="text-sm text-zinc-400">Advanced memory shielding.</p>
-            </div>
-            
-            <div class="feature-card glass rounded-3xl p-6 border border-white/10">
-                <i class="fa-solid fa-terminal text-2xl text-lime-400 mb-4"></i>
-                <h4 class="font-semibold text-xl mb-1">Console</h4>
-                <p class="text-sm text-zinc-400">Powerful built-in developer console.</p>
-            </div>
-            
-            <div class="feature-card glass rounded-3xl p-6 border border-white/10">
-                <i class="fa-solid fa-globe text-2xl text-blue-400 mb-4"></i>
-                <h4 class="font-semibold text-xl mb-1">Auto-Update</h4>
-                <p class="text-sm text-zinc-400">Seamless background updates.</p>
-            </div>
-        </div>
+
+        </main>
     </div>
+
     <script>
-        function switchTab(tab) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
-            
-            const downloadTab = document.getElementById('tab-download');
-            const featuresTab = document.getElementById('tab-features');
-            
-            if (tab === 'download') {
-                downloadTab.classList.add('active');
-                featuresTab.classList.remove('active');
-                featuresTab.classList.add('text-zinc-400');
-                downloadTab.classList.remove('text-zinc-400');
-            } else {
-                featuresTab.classList.add('active');
-                downloadTab.classList.remove('active');
-                downloadTab.classList.add('text-zinc-400');
-                featuresTab.classList.remove('text-zinc-400');
-            }
+        var API = "https://abacus.jasoncameron.dev";
+        var NS = "swift-keyless-v1";
+        var KEY = "dl-count";
+        var currentCount = 0;
+        var displayCount = 0;
+        var animFrame = null;
+
+        function formatNum(n) {
+            return n.toLocaleString();
         }
-        
-        let downloadCount = 0;
-        
-        function updateCounter(newValue, animate = true) {
-            const counterEl = document.getElementById('download-counter');
-            const oldValue = downloadCount;
-            downloadCount = newValue;
-            
-            localStorage.setItem('swift_downloads', downloadCount);
-            
-            if (!animate) {
-                counterEl.textContent = newValue.toLocaleString();
-                return;
-            }
-            
-            const duration = 850;
-            const startTime = Date.now();
-            const diff = newValue - oldValue;
-            
-            function animateCount() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                const current = Math.floor(oldValue + diff * eased);
-                
-                counterEl.textContent = current.toLocaleString();
-                
-                if (progress < 1) {
-                    requestAnimationFrame(animateCount);
+
+        function animateTo(target) {
+            if (animFrame) cancelAnimationFrame(animFrame);
+            var from = displayCount;
+            var start = Date.now();
+            function run() {
+                var p = Math.min((Date.now() - start) / 900, 1);
+                var e = 1 - Math.pow(1 - p, 3);
+                displayCount = Math.floor(from + (target - from) * e);
+                document.getElementById("counter-display").textContent = formatNum(displayCount);
+                if (p < 1) {
+                    animFrame = requestAnimationFrame(run);
                 } else {
-                    counterEl.textContent = newValue.toLocaleString();
+                    displayCount = target;
+                    document.getElementById("counter-display").textContent = formatNum(target);
                 }
             }
-            
-            animateCount();
+            run();
         }
-        
-        function triggerDownload() {
-            const newCount = downloadCount + 1;
-            updateCounter(newCount);
-            
-            const btn = document.querySelector('.btn-download');
-            const originalHTML = btn.innerHTML;
-            
-            btn.style.transition = 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
-            btn.style.transform = 'scale(0.95)';
-            
-            setTimeout(() => {
-                btn.innerHTML = `
-                    <div class="flex items-center justify-center w-full gap-x-3 text-emerald-600 transition-all">
-                        <i class="fa-solid fa-check text-2xl"></i>
-                        <span class="font-semibold text-xl">Thank you!</span>
-                    </div>
-                `;
-                btn.style.transform = 'scale(1)';
-                btn.style.backgroundColor = '#f0fdf4';
-                btn.disabled = true;
+
+        function initCounter() {
+            fetch(API + "/get/" + NS + "/" + KEY)
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (typeof d.value === "number") {
+                        currentCount = d.value;
+                        displayCount = d.value;
+                        document.getElementById("counter-display").textContent = formatNum(d.value);
+                    }
+                    startStream();
+                })
+                .catch(function() { startStream(); });
+        }
+
+        function startStream() {
+            try {
+                var es = new EventSource(API + "/stream/" + NS + "/" + KEY);
+                es.onmessage = function(e) {
+                    try {
+                        var d = JSON.parse(e.data);
+                        if (typeof d.value === "number" && d.value !== currentCount) {
+                            currentCount = d.value;
+                            animateTo(d.value);
+                        }
+                    } catch(err) {}
+                };
+            } catch(err) {}
+        }
+
+        function handleDownload() {
+            var btn = document.getElementById("download-btn");
+            if (btn.disabled) return;
+            btn.disabled = true;
+
+            fetch(API + "/hit/" + NS + "/" + KEY)
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (typeof d.value === "number") {
+                        currentCount = d.value;
+                        animateTo(d.value);
+                    }
+                })
+                .catch(function() {});
+
+            btn.style.transform = "scale(0.97)";
+            setTimeout(function() {
+                btn.innerHTML = '<div class="flex items-center justify-center w-full gap-x-3 text-emerald-600"><i class="fa-solid fa-check text-xl sm:text-2xl"></i><span class="font-semibold text-lg sm:text-xl">Thank you!</span></div>';
+                btn.style.transform = "";
+                btn.style.backgroundColor = "#f0fdf4";
             }, 180);
-            
-            setTimeout(() => {
-                btn.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-                btn.innerHTML = originalHTML;
-                btn.style.backgroundColor = '';
-                btn.style.transform = '';
+
+            setTimeout(function() {
+                btn.innerHTML = '<div class="w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-xl sm:rounded-2xl overflow-hidden ring-1 ring-zinc-900/20 mr-3 sm:mr-4"><img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2aa2ec&is=6a29516c&hm=302647f3703a5489ab54d12c8117b696810ba8288ca47a6531bea35b63729e55&=&format=webp&quality=lossless&width=884&height=884" class="w-full h-full object-cover" alt="Swift"></div><div class="flex-1 text-left min-w-0"><span class="font-semibold text-xl sm:text-2xl tracking-tight text-zinc-900 block truncate">Download Swift</span><div class="text-zinc-600 text-[10px] sm:text-xs font-medium -mt-0.5">V1 • 0 MB</div></div><i class="fa-solid fa-arrow-down text-xl sm:text-2xl text-zinc-900 group-active:translate-y-0.5 transition-transform ml-1"></i>';
+                btn.style.backgroundColor = "";
                 btn.disabled = false;
-                window.location.href = "download.html";
             }, 1650);
         }
-        
-        function init() {
-            const saved = localStorage.getItem('swift_downloads');
-            downloadCount = saved ? parseInt(saved) : 0;
-            
-            const counterEl = document.getElementById('download-counter');
-            counterEl.textContent = downloadCount.toLocaleString();
-            
-            document.getElementById('tab-download').classList.add('active');
-            document.getElementById('tab-features').classList.add('text-zinc-400');
+
+        function switchTab(tab) {
+            document.querySelectorAll(".section").forEach(function(s) { s.classList.remove("active"); });
+            document.getElementById(tab).classList.add("active");
+
+            document.querySelectorAll(".nav-pill").forEach(function(p) {
+                p.classList.remove("active");
+                p.classList.add("text-zinc-500");
+            });
+            var activeTab = document.getElementById("tab-" + tab);
+            activeTab.classList.add("active");
+            activeTab.classList.remove("text-zinc-500");
         }
-        
-        window.onload = init;
+
+        function loadMembers() {
+            fetch("https://discord.com/api/v9/invites/RsBMBwUHd7?with_counts=true")
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.approximate_member_count) {
+                        document.getElementById("member-num").textContent = d.approximate_member_count.toLocaleString() + " members";
+                        document.getElementById("member-count").classList.remove("hidden");
+                    }
+                })
+                .catch(function() {});
+        }
+
+        window.onload = function() {
+            initCounter();
+            loadMembers();
+        };
     </script>
+
 </body>
 </html>
