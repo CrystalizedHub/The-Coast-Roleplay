@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swift • Keyless Executor</title>
-    <link rel="icon" type="image/png" href="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2bf46c&is=6a2aa2ec&hm=52f7b6616b3b476d65297c572f6de349a6d2fedb25b58555d33ec6cff4036fbe&=&format=webp&quality=lossless&width=968&height=968">
+    <link rel="icon" type="image/png" href="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2e976c&is=6a2d45ec&hm=0a1dd39235a1da0a9ab5fe5646a1b77b89d8bd84dbcc33d9bb53cbb5bc48b56a&=&format=webp&quality=lossless&width=968&height=968">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', system-ui, sans-serif; }
+        body { font-family: 'Inter', system-ui, sans-serif; -webkit-user-select: none; -moz-user-select: none; user-select: none; }
         .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
         .section { display: none; }
         .section.active { display: block; animation: fadeIn 0.4s ease forwards; }
@@ -30,7 +30,7 @@
         .discord-btn:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3); }
         .bar-fill { transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
         .gold-orb { position: absolute; border-radius: 9999px; pointer-events: none; }
-        .gold-vein { position: absolute; left: 0; right: 0; height: 1px; pointer-events: none; }
+        .gold-vein { position: absolute; left: 0; right: 0; pointer-events: none; }
         .cooldown-bar { height: 3px; background: rgba(255,255,255,0.15); border-radius: 9999px; overflow: hidden; transition: opacity 0.3s ease; }
         .cooldown-fill { height: 100%; background: linear-gradient(90deg, #a5b4fc, #818cf8); border-radius: 9999px; transition: width 0.1s linear; }
     </style>
@@ -38,18 +38,22 @@
 <body class="bg-zinc-950 text-zinc-200 min-h-screen">
 
     <div class="fixed inset-0 pointer-events-none overflow-hidden" style="z-index:0">
-        <div class="gold-orb" style="width:600px;height:350px;top:-5%;left:8%;background:radial-gradient(ellipse,rgba(200,165,50,0.07) 0%,transparent 70%);filter:blur(80px)"></div>
-        <div class="gold-orb" style="width:500px;height:300px;top:8%;right:5%;background:radial-gradient(ellipse,rgba(185,150,45,0.055) 0%,transparent 70%);filter:blur(90px);transform:rotate(30deg)"></div>
-        <div class="gold-orb" style="width:700px;height:250px;top:35%;left:30%;background:radial-gradient(ellipse,rgba(190,155,50,0.045) 0%,transparent 70%);filter:blur(100px)"></div>
-        <div class="gold-orb" style="width:450px;height:400px;bottom:15%;left:3%;background:radial-gradient(ellipse,rgba(175,140,40,0.06) 0%,transparent 70%);filter:blur(85px);transform:rotate(-15deg)"></div>
-        <div class="gold-orb" style="width:550px;height:320px;bottom:5%;right:10%;background:radial-gradient(ellipse,rgba(195,160,55,0.05) 0%,transparent 70%);filter:blur(95px);transform:rotate(20deg)"></div>
-        <div class="gold-orb" style="width:300px;height:300px;top:55%;right:35%;background:radial-gradient(circle,rgba(210,175,60,0.04) 0%,transparent 65%);filter:blur(70px)"></div>
-        <div style="position:absolute;inset:0;opacity:0.35">
-            <div class="gold-vein" style="top:18%;background:linear-gradient(90deg,transparent 5%,rgba(200,170,60,0.15) 25%,rgba(180,150,50,0.08) 50%,rgba(200,170,60,0.12) 75%,transparent 95%);transform:rotate(12deg)"></div>
-            <div class="gold-vein" style="top:42%;background:linear-gradient(90deg,transparent 10%,rgba(190,160,55,0.12) 30%,transparent 55%,rgba(185,155,50,0.1) 80%,transparent 95%);transform:rotate(-6deg)"></div>
-            <div class="gold-vein" style="top:65%;background:linear-gradient(90deg,transparent 0%,rgba(195,165,55,0.1) 20%,rgba(175,145,45,0.14) 45%,transparent 70%);transform:rotate(18deg)"></div>
-            <div class="gold-vein" style="top:80%;background:linear-gradient(90deg,transparent 15%,rgba(180,150,50,0.08) 40%,rgba(200,170,60,0.12) 65%,transparent 90%);transform:rotate(-10deg)"></div>
-            <div class="gold-vein" style="top:30%;background:linear-gradient(90deg,transparent 20%,rgba(210,180,65,0.1) 50%,transparent 80%);transform:rotate(25deg)"></div>
+        <div class="gold-orb" style="width:700px;height:450px;top:-8%;left:5%;background:radial-gradient(ellipse,rgba(210,175,55,0.14) 0%,transparent 65%);filter:blur(60px)"></div>
+        <div class="gold-orb" style="width:600px;height:400px;top:5%;right:2%;background:radial-gradient(ellipse,rgba(195,160,50,0.12) 0%,transparent 65%);filter:blur(65px);transform:rotate(25deg)"></div>
+        <div class="gold-orb" style="width:800px;height:350px;top:30%;left:25%;background:radial-gradient(ellipse,rgba(200,165,55,0.1) 0%,transparent 60%);filter:blur(70px)"></div>
+        <div class="gold-orb" style="width:550px;height:500px;bottom:10%;left:0%;background:radial-gradient(ellipse,rgba(185,150,45,0.13) 0%,transparent 65%);filter:blur(60px);transform:rotate(-20deg)"></div>
+        <div class="gold-orb" style="width:650px;height:400px;bottom:0%;right:5%;background:radial-gradient(ellipse,rgba(205,170,55,0.11) 0%,transparent 65%);filter:blur(65px);transform:rotate(15deg)"></div>
+        <div class="gold-orb" style="width:400px;height:400px;top:55%;right:30%;background:radial-gradient(circle,rgba(220,185,65,0.09) 0%,transparent 60%);filter:blur(55px)"></div>
+        <div class="gold-orb" style="width:500px;height:300px;top:70%;left:15%;background:radial-gradient(ellipse,rgba(190,155,50,0.1) 0%,transparent 60%);filter:blur(60px);transform:rotate(35deg)"></div>
+        <div style="position:absolute;inset:0;opacity:0.7">
+            <div class="gold-vein" style="top:12%;height:2px;background:linear-gradient(90deg,transparent 2%,rgba(210,180,65,0.25) 15%,rgba(190,155,50,0.15) 35%,rgba(210,180,65,0.2) 55%,rgba(185,150,45,0.12) 75%,transparent 92%);transform:rotate(8deg)"></div>
+            <div class="gold-vein" style="top:28%;height:2px;background:linear-gradient(90deg,transparent 8%,rgba(200,170,60,0.2) 25%,transparent 45%,rgba(195,165,55,0.18) 65%,rgba(210,180,65,0.15) 82%,transparent 95%);transform:rotate(-5deg)"></div>
+            <div class="gold-vein" style="top:45%;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(215,185,70,0.22) 18%,rgba(190,155,50,0.18) 40%,transparent 58%,rgba(200,170,60,0.16) 78%,transparent 95%);transform:rotate(14deg)"></div>
+            <div class="gold-vein" style="top:58%;height:1px;background:linear-gradient(90deg,transparent 12%,rgba(205,175,60,0.2) 30%,rgba(185,150,45,0.14) 50%,rgba(210,180,65,0.18) 72%,transparent 90%);transform:rotate(-9deg)"></div>
+            <div class="gold-vein" style="top:72%;height:2px;background:linear-gradient(90deg,transparent 5%,rgba(195,165,55,0.2) 22%,rgba(210,180,65,0.25) 42%,transparent 62%,rgba(200,170,60,0.15) 85%,transparent 98%);transform:rotate(20deg)"></div>
+            <div class="gold-vein" style="top:85%;height:1px;background:linear-gradient(90deg,transparent 10%,rgba(190,155,50,0.18) 28%,rgba(205,175,60,0.22) 50%,rgba(195,165,55,0.14) 70%,transparent 88%);transform:rotate(-12deg)"></div>
+            <div class="gold-vein" style="top:36%;height:1px;background:linear-gradient(90deg,transparent 18%,rgba(220,190,70,0.2) 38%,rgba(200,170,60,0.16) 55%,transparent 75%);transform:rotate(28deg)"></div>
+            <div class="gold-vein" style="top:6%;height:1px;background:linear-gradient(90deg,transparent 25%,rgba(200,170,60,0.18) 45%,rgba(215,185,70,0.22) 65%,transparent 85%);transform:rotate(-3deg)"></div>
         </div>
     </div>
 
@@ -60,7 +64,7 @@
                 <div class="flex items-center justify-between md:justify-start h-16 sm:h-20 relative">
                     <div class="flex items-center gap-x-2.5 sm:gap-x-3 z-10 shrink-0">
                         <div class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-2xl sm:rounded-3xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
-                            <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2bf46c&is=6a2aa2ec&hm=52f7b6616b3b476d65297c572f6de349a6d2fedb25b58555d33ec6cff4036fbe&=&format=webp&quality=lossless&width=968&height=968" alt="Swift" class="w-full h-full object-cover">
+                            <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2e976c&is=6a2d45ec&hm=0a1dd39235a1da0a9ab5fe5646a1b77b89d8bd84dbcc33d9bb53cbb5bc48b56a&=&format=webp&quality=lossless&width=968&height=968" alt="Swift" class="w-full h-full object-cover">
                         </div>
                         <span class="hidden sm:block font-display text-2xl sm:text-3xl md:text-4xl tracking-tighter">Swift</span>
                     </div>
@@ -107,7 +111,6 @@
                             <div id="counter-display" class="counter-num font-display text-[56px] sm:text-[80px] md:text-[110px] tracking-[-4px] sm:tracking-[-6px] text-white leading-none">0</div>
                             <div class="text-xs sm:text-sm text-zinc-500 mt-1 font-medium">total downloads worldwide</div>
                         </div>
-
                         <div class="pt-5 sm:pt-7 border-t border-white/10">
                             <div class="flex flex-col md:flex-row items-start md:items-end justify-center gap-y-6 sm:gap-y-8 gap-x-8 max-w-[620px] mx-auto px-1 sm:px-2">
                                 <div class="w-full md:w-auto">
@@ -138,31 +141,43 @@
 
                     <div class="mb-6 sm:mb-8 rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl">
                         <div class="relative">
-                            <img src="https://media.discordapp.net/attachments/1513518434997243924/1514288250607505508/image.png?ex=6a2ad255&is=6a2980d5&hm=1b232a988950b814c0d5cae66c7f9d0b51c8bae41f11d55b24f75611f8ade8cd&=&format=webp&quality=lossless&width=550&height=336" alt="Swift UI Preview" class="w-full h-auto block">
+                            <img src="https://media.discordapp.net/attachments/1513518434997243924/1514288250607505508/image.png?ex=6a2ec6d5&is=6a2d7555&hm=5c0a44b0b931314bf6b32f6c27783db5ef49e4102cdb184a4a1582c04372e260&=&format=webp&quality=lossless" alt="Swift UI Preview" class="w-full h-auto block">
                             <div class="absolute inset-2 sm:inset-4 border border-white/10 rounded-xl sm:rounded-2xl opacity-30 pointer-events-none"></div>
                         </div>
                     </div>
 
                     <div class="max-w-lg mx-auto">
-                        <button id="download-btn" onclick="handleDownload()" class="dl-btn group w-full flex items-center px-5 sm:px-8 py-4 sm:py-5 md:py-[22px] rounded-2xl sm:rounded-3xl text-lg sm:text-xl font-semibold bg-white hover:bg-zinc-100 active:bg-zinc-200">
-                            <div class="w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-xl sm:rounded-2xl overflow-hidden ring-1 ring-zinc-900/20 mr-3 sm:mr-4">
-                                <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2bf46c&is=6a2aa2ec&hm=52f7b6616b3b476d65297c572f6de349a6d2fedb25b58555d33ec6cff4036fbe&=&format=webp&quality=lossless&width=968&height=968" class="w-full h-full object-cover" alt="Swift">
+                        <div id="desktop-download">
+                            <button id="download-btn" onclick="handleDownload()" class="dl-btn group w-full flex items-center px-5 sm:px-8 py-4 sm:py-5 md:py-[22px] rounded-2xl sm:rounded-3xl text-lg sm:text-xl font-semibold bg-white hover:bg-zinc-100 active:bg-zinc-200">
+                                <div class="w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-xl sm:rounded-2xl overflow-hidden ring-1 ring-zinc-900/20 mr-3 sm:mr-4">
+                                    <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2e976c&is=6a2d45ec&hm=0a1dd39235a1da0a9ab5fe5646a1b77b89d8bd84dbcc33d9bb53cbb5bc48b56a&=&format=webp&quality=lossless&width=968&height=968" class="w-full h-full object-cover" alt="Swift">
+                                </div>
+                                <div class="flex-1 text-left min-w-0">
+                                    <span class="font-semibold text-xl sm:text-2xl tracking-tight text-zinc-900 block truncate">Download Swift</span>
+                                    <div class="text-zinc-600 text-[10px] sm:text-xs font-medium -mt-0.5">V1 • 0 MB</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-down text-xl sm:text-2xl text-zinc-900 group-active:translate-y-0.5 transition-transform ml-1"></i>
+                            </button>
+                            <div id="cooldown-wrap" class="mt-2 max-w-lg mx-auto" style="opacity:0">
+                                <div class="cooldown-bar">
+                                    <div id="cooldown-fill" class="cooldown-fill" style="width:100%"></div>
+                                </div>
+                                <div id="cooldown-text" class="text-[10px] sm:text-xs text-zinc-500 text-center mt-1 font-medium"></div>
                             </div>
-                            <div class="flex-1 text-left min-w-0">
-                                <span class="font-semibold text-xl sm:text-2xl tracking-tight text-zinc-900 block truncate">Download Swift</span>
-                                <div class="text-zinc-600 text-[10px] sm:text-xs font-medium -mt-0.5">V1 • 0 MB</div>
+                            <div class="mt-2 sm:mt-3 text-[10px] sm:text-xs text-zinc-500 flex items-center justify-center gap-x-2">
+                                <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                                <span>Verified • Signed • Safe</span>
                             </div>
-                            <i class="fa-solid fa-arrow-down text-xl sm:text-2xl text-zinc-900 group-active:translate-y-0.5 transition-transform ml-1"></i>
-                        </button>
-                        <div id="cooldown-wrap" class="mt-2 max-w-lg mx-auto" style="opacity:0">
-                            <div class="cooldown-bar">
-                                <div id="cooldown-fill" class="cooldown-fill" style="width:100%"></div>
-                            </div>
-                            <div id="cooldown-text" class="text-[10px] sm:text-xs text-zinc-500 text-center mt-1 font-medium"></div>
                         </div>
-                        <div class="mt-2 sm:mt-3 text-[10px] sm:text-xs text-zinc-500 flex items-center justify-center gap-x-2">
-                            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
-                            <span>Verified • Signed • Safe</span>
+                        <div id="mobile-download" class="hidden">
+                            <div class="rounded-2xl sm:rounded-3xl border border-rose-500/20 bg-rose-500/5 px-6 py-6">
+                                <div class="flex flex-col items-center gap-y-3">
+                                    <i class="fa-solid fa-mobile-screen text-3xl text-rose-400"></i>
+                                    <p class="text-sm text-rose-200/90 text-center leading-relaxed font-medium">
+                                        Download is unavailable for mobile users. We only support desktop at this time. Mobile support will be coming soon with an .apk release.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -182,7 +197,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="mt-6 sm:mt-8 text-[9px] sm:text-[10px] text-zinc-500 font-medium tracking-wider">
                         Swift is not affiliated with Roblox Corporation in any way.
                     </div>
@@ -195,56 +209,16 @@
                     <p class="text-zinc-400 mt-2 sm:mt-3 text-sm sm:text-base">What we offer.</p>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 max-w-6xl mx-auto">
-                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
-                        <i class="fa-solid fa-search text-xl sm:text-2xl text-indigo-400 mb-3 sm:mb-4 block"></i>
-                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Decompiler</h4>
-                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Full bytecode decompiler with clean output.</p>
-                    </div>
-                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
-                        <i class="fa-solid fa-layer-group text-xl sm:text-2xl text-sky-400 mb-3 sm:mb-4 block"></i>
-                        <h4 class="font-semibold text-lg sm:text-xl mb-1">MultiInstance</h4>
-                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Run multiple instances simultaneously.</p>
-                    </div>
-                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
-                        <i class="fa-solid fa-user-secret text-xl sm:text-2xl text-emerald-400 mb-3 sm:mb-4 block"></i>
-                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Undetected</h4>
-                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Advanced anti-detection system.</p>
-                    </div>
-                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
-                        <i class="fa-solid fa-sync text-xl sm:text-2xl text-violet-400 mb-3 sm:mb-4 block"></i>
-                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Always Updated</h4>
-                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Weekly updates with new features.</p>
-                    </div>
-                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
-                        <i class="fa-solid fa-sliders-h text-xl sm:text-2xl text-amber-400 mb-3 sm:mb-4 block"></i>
-                        <h4 class="font-semibold text-lg sm:text-xl mb-1">QOL Changes</h4>
-                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Quality of life improvements everywhere.</p>
-                    </div>
-                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
-                        <i class="fa-solid fa-cog text-xl sm:text-2xl text-rose-400 mb-3 sm:mb-4 block"></i>
-                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Settings</h4>
-                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Deep customization options.</p>
-                    </div>
-                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
-                        <i class="fa-solid fa-plug text-xl sm:text-2xl text-teal-400 mb-3 sm:mb-4 block"></i>
-                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Script Hub</h4>
-                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Built-in verified script library.</p>
-                    </div>
-                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
-                        <i class="fa-solid fa-shield-alt text-xl sm:text-2xl text-orange-400 mb-3 sm:mb-4 block"></i>
-                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Memory Protection</h4>
-                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Advanced memory shielding.</p>
-                    </div>
-                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
-                        <i class="fa-solid fa-terminal text-xl sm:text-2xl text-lime-400 mb-3 sm:mb-4 block"></i>
-                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Console</h4>
-                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Powerful built-in developer console.</p>
-                    </div>
-                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default">
-                        <i class="fa-solid fa-globe text-xl sm:text-2xl text-blue-400 mb-3 sm:mb-4 block"></i>
-                        <h4 class="font-semibold text-lg sm:text-xl mb-1">Auto-Update</h4>
-                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Seamless background updates.</p>
-                    </div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default"><i class="fa-solid fa-search text-xl sm:text-2xl text-indigo-400 mb-3 sm:mb-4 block"></i><h4 class="font-semibold text-lg sm:text-xl mb-1">Decompiler</h4><p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Full bytecode decompiler with clean output.</p></div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default"><i class="fa-solid fa-layer-group text-xl sm:text-2xl text-sky-400 mb-3 sm:mb-4 block"></i><h4 class="font-semibold text-lg sm:text-xl mb-1">MultiInstance</h4><p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Run multiple instances simultaneously.</p></div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default"><i class="fa-solid fa-user-secret text-xl sm:text-2xl text-emerald-400 mb-3 sm:mb-4 block"></i><h4 class="font-semibold text-lg sm:text-xl mb-1">Undetected</h4><p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Advanced anti-detection system.</p></div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default"><i class="fa-solid fa-sync text-xl sm:text-2xl text-violet-400 mb-3 sm:mb-4 block"></i><h4 class="font-semibold text-lg sm:text-xl mb-1">Always Updated</h4><p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Weekly updates with new features.</p></div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default"><i class="fa-solid fa-sliders-h text-xl sm:text-2xl text-amber-400 mb-3 sm:mb-4 block"></i><h4 class="font-semibold text-lg sm:text-xl mb-1">QOL Changes</h4><p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Quality of life improvements everywhere.</p></div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default"><i class="fa-solid fa-cog text-xl sm:text-2xl text-rose-400 mb-3 sm:mb-4 block"></i><h4 class="font-semibold text-lg sm:text-xl mb-1">Settings</h4><p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Deep customization options.</p></div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default"><i class="fa-solid fa-plug text-xl sm:text-2xl text-teal-400 mb-3 sm:mb-4 block"></i><h4 class="font-semibold text-lg sm:text-xl mb-1">Script Hub</h4><p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Built-in verified script library.</p></div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default"><i class="fa-solid fa-shield-alt text-xl sm:text-2xl text-orange-400 mb-3 sm:mb-4 block"></i><h4 class="font-semibold text-lg sm:text-xl mb-1">Memory Protection</h4><p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Advanced memory shielding.</p></div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default"><i class="fa-solid fa-terminal text-xl sm:text-2xl text-lime-400 mb-3 sm:mb-4 block"></i><h4 class="font-semibold text-lg sm:text-xl mb-1">Console</h4><p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Powerful built-in developer console.</p></div>
+                    <div class="feature-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/10 bg-white/[0.03] backdrop-blur-2xl cursor-default"><i class="fa-solid fa-globe text-xl sm:text-2xl text-blue-400 mb-3 sm:mb-4 block"></i><h4 class="font-semibold text-lg sm:text-xl mb-1">Auto-Update</h4><p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Seamless background updates.</p></div>
                 </div>
             </div>
 
@@ -252,15 +226,12 @@
                 <div class="max-w-xl mx-auto text-center">
                     <h2 class="font-display text-4xl sm:text-5xl md:text-6xl tracking-[-2px] sm:tracking-[-2.5px] mb-2 sm:mb-3">Get support.</h2>
                     <p class="text-zinc-400 mb-8 sm:mb-10 text-sm sm:text-base">Join the community for help, updates, and more.</p>
-
                     <div class="rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.07]">
                         <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-5 sm:mb-6 rounded-2xl sm:rounded-3xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
-                            <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2bf46c&is=6a2aa2ec&hm=52f7b6616b3b476d65297c572f6de349a6d2fedb25b58555d33ec6cff4036fbe&=&format=webp&quality=lossless&width=968&height=968" alt="Swift" class="w-full h-full object-cover">
+                            <img src="https://media.discordapp.net/attachments/1513518434997243924/1514237345619120218/swiftTURNTHISINTOICO.png?ex=6a2e976c&is=6a2d45ec&hm=0a1dd39235a1da0a9ab5fe5646a1b77b89d8bd84dbcc33d9bb53cbb5bc48b56a&=&format=webp&quality=lossless&width=968&height=968" alt="Swift" class="w-full h-full object-cover">
                         </div>
-
-                        <h3 class="font-display text-xl sm:text-2xl mb-1">Swift Discord Server</h3>
+                        <h3 class="font-display text-xl sm:text-2xl mb-1">Swift Community</h3>
                         <p class="text-zinc-400 text-xs sm:text-sm mb-5 sm:mb-6">Official Discord Server</p>
-
                         <div id="member-count" class="hidden items-center gap-x-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-zinc-800/60 border border-white/10 mb-6 sm:mb-8 justify-center inline-flex">
                             <span class="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -268,7 +239,6 @@
                             </span>
                             <span id="member-num" class="text-xs sm:text-sm font-semibold text-zinc-200">0 members</span>
                         </div>
-
                         <div>
                             <a href="https://discord.gg/RsBMBwUHd7" target="_blank" rel="noopener noreferrer" class="discord-btn inline-flex items-center gap-x-2.5 sm:gap-x-3 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg font-semibold bg-[#5865F2] hover:bg-[#4752C4] active:bg-[#3C45A5]">
                                 <i class="fa-brands fa-discord text-xl sm:text-2xl"></i>
@@ -284,182 +254,233 @@
     </div>
 
     <script>
-        var API = "https://abacus.jasoncameron.dev";
-        var NS = "swift-keyless-v1";
-        var KEY = "downloads";
-        var COOLDOWN_MS = 30000;
+        var _0x={
+            a:atob('aHR0cHM6Ly9hYmFjdXMuamFzb25jYW1lcm9uLmRldi8='),
+            b:atob('c3dpZnQtZXhlYy1wcm9k'),
+            c:atob('ZGxjLXYy')
+        };
+        var CD=60000;
+        var _ct=0,_dt=0,_af=null,_lk=false,_ti=null,_ce=0,_bh='';
 
-        var currentCount = 0;
-        var displayCount = 0;
-        var animFrame = null;
-        var locked = false;
-        var cooldownTimer = null;
-        var cooldownEnd = 0;
+        !function(){
+            document.addEventListener('contextmenu',function(e){e.preventDefault();});
+            document.addEventListener('keydown',function(e){
+                if(e.key==='F12')e.preventDefault();
+                if(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'||e.key==='C'))e.preventDefault();
+                if(e.ctrlKey&&e.key==='u')e.preventDefault();
+                if(e.ctrlKey&&e.key==='s')e.preventDefault();
+            });
+            var el=document.createElement('div');
+            Object.defineProperty(el,'id',{get:function(){window.location.href='about:blank';}});
+        }();
 
-        var btnDefaultHTML = '';
+        function _fp(){
+            var c=document.createElement('canvas');
+            var g=c.getContext('2d');
+            g.textBaseline='top';
+            g.font='14px Arial';
+            g.fillText('fp',2,2);
+            var s=c.toDataURL();
+            var n=navigator.userAgent+navigator.language+screen.width+'x'+screen.height+screen.colorDepth+(new Date()).getTimezoneOffset();
+            var h=0;
+            var full=s+n;
+            for(var i=0;i<full.length;i++){
+                h=((h<<5)-h)+full.charCodeAt(i);
+                h|=0;
+            }
+            return 'sf_'+Math.abs(h).toString(36);
+        }
 
-        function animateTo(target) {
-            if (animFrame) cancelAnimationFrame(animFrame);
-            var from = displayCount;
-            var start = Date.now();
-            var run = function() {
-                var p = Math.min((Date.now() - start) / 900, 1);
-                var e = 1 - Math.pow(1 - p, 3);
-                displayCount = Math.floor(from + (target - from) * e);
-                document.getElementById("counter-display").textContent = displayCount.toLocaleString();
-                if (p < 1) {
-                    animFrame = requestAnimationFrame(run);
-                } else {
-                    displayCount = target;
-                    document.getElementById("counter-display").textContent = target.toLocaleString();
+        function _sc(k,v){
+            try{localStorage.setItem(k,v);}catch(e){}
+            try{sessionStorage.setItem(k,v);}catch(e){}
+            try{document.cookie=k+'='+v+';max-age=86400;path=/;SameSite=Strict';}catch(e){}
+            try{
+                var r=indexedDB.open('_sf',1);
+                r.onupgradeneeded=function(e){e.target.result.createObjectStore('d');};
+                r.onsuccess=function(e){
+                    var db=e.target.result;
+                    try{var tx=db.transaction('d','readwrite');tx.objectStore('d').put(v,k);}catch(x){}
+                };
+            }catch(e){}
+        }
+
+        function _gc(k,cb){
+            var v=null;
+            try{v=localStorage.getItem(k);}catch(e){}
+            if(v){cb(v);return;}
+            try{v=sessionStorage.getItem(k);}catch(e){}
+            if(v){cb(v);return;}
+            try{
+                var cookies=document.cookie.split(';');
+                for(var i=0;i<cookies.length;i++){
+                    var c=cookies[i].trim();
+                    if(c.indexOf(k+'=')===0){cb(c.substring(k.length+1));return;}
                 }
+            }catch(e){}
+            try{
+                var r=indexedDB.open('_sf',1);
+                r.onupgradeneeded=function(e){e.target.result.createObjectStore('d');};
+                r.onsuccess=function(e){
+                    var db=e.target.result;
+                    try{
+                        var tx=db.transaction('d','readonly');
+                        var req=tx.objectStore('d').get(k);
+                        req.onsuccess=function(){cb(req.result||null);};
+                        req.onerror=function(){cb(null);};
+                    }catch(x){cb(null);}
+                };
+                r.onerror=function(){cb(null);};
+            }catch(e){cb(null);}
+        }
+
+        function _ep(){return _0x.a;}
+        function _en(){return _0x.b;}
+        function _ek(){return _0x.c;}
+
+        function _mobile(){
+            return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)||(window.innerWidth<=768&&'ontouchstart' in window);
+        }
+
+        function _anim(t){
+            if(_af)cancelAnimationFrame(_af);
+            var f=_dt,s=Date.now();
+            var run=function(){
+                var p=Math.min((Date.now()-s)/900,1);
+                var e=1-Math.pow(1-p,3);
+                _dt=Math.floor(f+(t-f)*e);
+                document.getElementById('counter-display').textContent=_dt.toLocaleString();
+                if(p<1){_af=requestAnimationFrame(run);}
+                else{_dt=t;document.getElementById('counter-display').textContent=t.toLocaleString();}
             };
             run();
         }
 
-        function initCounter() {
-            fetch(API + "/get/" + NS + "/" + KEY)
-                .then(function(r) { return r.json(); })
-                .then(function(d) {
-                    if (typeof d.value === "number") {
-                        currentCount = d.value;
-                        displayCount = d.value;
-                        document.getElementById("counter-display").textContent = d.value.toLocaleString();
-                    }
-                    openStream();
+        function _load(){
+            fetch(_ep()+'get/'+_en()+'/'+_ek())
+                .then(function(r){return r.json();})
+                .then(function(d){
+                    if(typeof d.value==='number'){_ct=d.value;_dt=d.value;document.getElementById('counter-display').textContent=d.value.toLocaleString();}
+                    _stream();
                 })
-                .catch(function() { openStream(); });
+                .catch(function(){_stream();});
         }
 
-        function openStream() {
-            try {
-                var es = new EventSource(API + "/stream/" + NS + "/" + KEY);
-                es.onmessage = function(e) {
-                    try {
-                        var d = JSON.parse(e.data);
-                        if (typeof d.value === "number" && d.value !== currentCount) {
-                            currentCount = d.value;
-                            animateTo(d.value);
-                        }
-                    } catch(x) {}
+        function _stream(){
+            try{
+                var es=new EventSource(_ep()+'stream/'+_en()+'/'+_ek());
+                es.onmessage=function(e){
+                    try{
+                        var d=JSON.parse(e.data);
+                        if(typeof d.value==='number'&&d.value!==_ct){_ct=d.value;_anim(d.value);}
+                    }catch(x){}
                 };
-            } catch(x) {}
+                es.onerror=function(){
+                    es.close();
+                    setTimeout(_stream,5000);
+                };
+            }catch(x){}
         }
 
-        function getCooldownRemaining() {
-            var stored = localStorage.getItem("swift_cd");
-            if (!stored) return 0;
-            var diff = parseInt(stored, 10) - Date.now();
-            return diff > 0 ? diff : 0;
-        }
+        function _cdkey(){return _fp()+'_cd';}
 
-        function setCooldown() {
-            cooldownEnd = Date.now() + COOLDOWN_MS;
-            localStorage.setItem("swift_cd", String(cooldownEnd));
-        }
-
-        function tickCooldown() {
-            var remaining = cooldownEnd - Date.now();
-            if (remaining <= 0) {
-                clearInterval(cooldownTimer);
-                cooldownTimer = null;
-                locked = false;
-                var btn = document.getElementById("download-btn");
-                btn.disabled = false;
-                btn.classList.remove("cooldown");
-                document.getElementById("cooldown-wrap").style.opacity = "0";
-                return;
-            }
-            var secs = Math.ceil(remaining / 1000);
-            var pct = (remaining / COOLDOWN_MS) * 100;
-            document.getElementById("cooldown-fill").style.width = pct + "%";
-            document.getElementById("cooldown-text").textContent = "Available again in " + secs + "s";
-        }
-
-        function startCooldownUI() {
-            var btn = document.getElementById("download-btn");
-            btn.disabled = true;
-            btn.classList.add("cooldown");
-            locked = true;
-            document.getElementById("cooldown-wrap").style.opacity = "1";
-            if (cooldownTimer) clearInterval(cooldownTimer);
-            tickCooldown();
-            cooldownTimer = setInterval(tickCooldown, 100);
-        }
-
-        function handleDownload() {
-            if (locked) return;
-
-            var remaining = getCooldownRemaining();
-            if (remaining > 0) {
-                cooldownEnd = Date.now() + remaining;
-                startCooldownUI();
-                return;
-            }
-
-            locked = true;
-            setCooldown();
-
-            fetch(API + "/hit/" + NS + "/" + KEY)
-                .then(function(r) { return r.json(); })
-                .then(function(d) {
-                    if (typeof d.value === "number") {
-                        currentCount = d.value;
-                        animateTo(d.value);
-                    }
-                })
-                .catch(function() {});
-
-            var btn = document.getElementById("download-btn");
-            btn.style.transform = "scale(0.97)";
-
-            setTimeout(function() {
-                btn.innerHTML = '<div class="flex items-center justify-center w-full gap-x-3 text-emerald-600"><i class="fa-solid fa-check text-xl sm:text-2xl"></i><span class="font-semibold text-lg sm:text-xl">Thank you!</span></div>';
-                btn.style.transform = "";
-                btn.style.backgroundColor = "#f0fdf4";
-            }, 180);
-
-            setTimeout(function() {
-                btn.innerHTML = btnDefaultHTML;
-                btn.style.backgroundColor = "";
-                startCooldownUI();
-            }, 1650);
-        }
-
-        function switchTab(tab) {
-            document.querySelectorAll(".section").forEach(function(s) { s.classList.remove("active"); });
-            document.getElementById(tab).classList.add("active");
-            document.querySelectorAll(".nav-pill").forEach(function(p) {
-                p.classList.remove("active");
-                p.classList.add("text-zinc-500");
+        function _remain(cb){
+            _gc(_cdkey(),function(v){
+                if(!v){cb(0);return;}
+                var diff=parseInt(v,10)-Date.now();
+                cb(diff>0?diff:0);
             });
-            var el = document.getElementById("tab-" + tab);
-            el.classList.add("active");
-            el.classList.remove("text-zinc-500");
         }
 
-        function loadMembers() {
-            fetch("https://discord.com/api/v9/invites/RsBMBwUHd7?with_counts=true")
-                .then(function(r) { return r.json(); })
-                .then(function(d) {
-                    if (d.approximate_member_count) {
-                        document.getElementById("member-num").textContent = d.approximate_member_count.toLocaleString() + " members";
-                        document.getElementById("member-count").classList.remove("hidden");
+        function _setcd(){
+            _ce=Date.now()+CD;
+            _sc(_cdkey(),String(_ce));
+        }
+
+        function _tick(){
+            var rem=_ce-Date.now();
+            if(rem<=0){
+                clearInterval(_ti);_ti=null;_lk=false;
+                var btn=document.getElementById('download-btn');
+                btn.disabled=false;btn.classList.remove('cooldown');
+                document.getElementById('cooldown-wrap').style.opacity='0';
+                return;
+            }
+            var s=Math.ceil(rem/1000);
+            var pct=(rem/CD)*100;
+            document.getElementById('cooldown-fill').style.width=pct+'%';
+            document.getElementById('cooldown-text').textContent='Available again in '+s+'s';
+        }
+
+        function _startcd(){
+            var btn=document.getElementById('download-btn');
+            btn.disabled=true;btn.classList.add('cooldown');
+            _lk=true;
+            document.getElementById('cooldown-wrap').style.opacity='1';
+            if(_ti)clearInterval(_ti);
+            _tick();
+            _ti=setInterval(_tick,100);
+        }
+
+        function handleDownload(){
+            if(_lk)return;
+            _remain(function(rem){
+                if(rem>0){
+                    _ce=Date.now()+rem;
+                    _startcd();
+                    return;
+                }
+                _lk=true;
+                _setcd();
+                fetch(_ep()+'hit/'+_en()+'/'+_ek())
+                    .then(function(r){return r.json();})
+                    .then(function(d){if(typeof d.value==='number'){_ct=d.value;_anim(d.value);}})
+                    .catch(function(){});
+                var btn=document.getElementById('download-btn');
+                btn.style.transform='scale(0.97)';
+                setTimeout(function(){
+                    btn.innerHTML='<div class="flex items-center justify-center w-full gap-x-3 text-emerald-600"><i class="fa-solid fa-check text-xl sm:text-2xl"></i><span class="font-semibold text-lg sm:text-xl">Thank you!</span></div>';
+                    btn.style.transform='';btn.style.backgroundColor='#f0fdf4';
+                },180);
+                setTimeout(function(){
+                    btn.innerHTML=_bh;btn.style.backgroundColor='';
+                    _startcd();
+                },1650);
+            });
+        }
+
+        function switchTab(t){
+            document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+            document.getElementById(t).classList.add('active');
+            document.querySelectorAll('.nav-pill').forEach(function(p){p.classList.remove('active');p.classList.add('text-zinc-500');});
+            var el=document.getElementById('tab-'+t);
+            el.classList.add('active');el.classList.remove('text-zinc-500');
+        }
+
+        function _members(){
+            fetch('https://discord.com/api/v9/invites/RsBMBwUHd7?with_counts=true')
+                .then(function(r){return r.json();})
+                .then(function(d){
+                    if(d.approximate_member_count){
+                        document.getElementById('member-num').textContent=d.approximate_member_count.toLocaleString()+' members';
+                        document.getElementById('member-count').classList.remove('hidden');
                     }
                 })
-                .catch(function() {});
+                .catch(function(){});
         }
 
-        window.onload = function() {
-            btnDefaultHTML = document.getElementById("download-btn").innerHTML;
-            initCounter();
-            loadMembers();
-
-            var remaining = getCooldownRemaining();
-            if (remaining > 0) {
-                cooldownEnd = Date.now() + remaining;
-                startCooldownUI();
+        window.onload=function(){
+            if(_mobile()){
+                document.getElementById('desktop-download').classList.add('hidden');
+                document.getElementById('mobile-download').classList.remove('hidden');
+            }else{
+                _bh=document.getElementById('download-btn').innerHTML;
+                _remain(function(rem){
+                    if(rem>0){_ce=Date.now()+rem;_startcd();}
+                });
             }
+            _load();
+            _members();
         };
     </script>
 
