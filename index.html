@@ -905,6 +905,7 @@ body{
   var U=null,P=null,COOLDOWN_MS=3600000;
   var currentAppId=null;
   var realtimeInterval=null;
+  var BOT_API='http://localhost:5599'; // CHANGE THIS to your bot's public URL in production
   function $(id){return document.getElementById(id)}
 
   var pages={};
@@ -932,18 +933,37 @@ body{
   function getChats(appId){try{return JSON.parse(localStorage.getItem('ec_chat_'+appId)||'[]')}catch(e){return[]}}
   function saveChats(appId,chats){try{localStorage.setItem('ec_chat_'+appId,JSON.stringify(chats))}catch(e){}}
 
-  // Real-time update checker
+  // Real-time update checker — polls bot API for live status & chat
   function startRealtimeUpdates(){
     stopRealtimeUpdates();
     realtimeInterval=setInterval(function(){
-      var apps=getApps();
-      if(apps.length===0)return;
-      var last=apps[apps.length-1];
-      if(last.id===currentAppId){
-        renderStatus(last);
-        renderChat(last.id);
-      }
-    },2000); // Check every 2 seconds
+      if(!currentAppId)return;
+      fetch(BOT_API+'/api/status/'+encodeURIComponent(currentAppId))
+        .then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.json()})
+        .then(function(remoteApp){
+          // Merge remote status into localStorage
+          var apps=getApps();
+          var found=false;
+          for(var i=0;i<apps.length;i++){
+            if(apps[i].id===currentAppId){
+              apps[i].status=remoteApp.status||apps[i].status;
+              apps[i].staffMessage=remoteApp.staffMessage||apps[i].staffMessage;
+              apps[i].deniedAt=remoteApp.deniedAt||apps[i].deniedAt;
+              apps[i].acceptedAt=remoteApp.acceptedAt||apps[i].acceptedAt;
+              found=true;
+              break;
+            }
+          }
+          if(!found){apps.push(remoteApp)}
+          saveApps(apps);
+          // Sync chats
+          if(remoteApp.chats&&remoteApp.chats.length>0){
+            saveChats(currentAppId,remoteApp.chats);
+          }
+          renderStatus(remoteApp);
+          renderChat(currentAppId);
+        }).catch(function(){});
+    },3000); // Poll every 3 seconds
   }
   
   function stopRealtimeUpdates(){
@@ -1063,8 +1083,8 @@ body{
     var apps=getApps();
     for(var i=0;i<apps.length;i++){if(apps[i].id===appId){apps[i].lastUserMessage=txt;apps[i].lastUserMessageTime=Date.now();break}}
     saveApps(apps);
-    var wh='https://discordapp.com/api/webhooks/1525613897569140776/MBDDY2J54ngrz-ZE7lNaNHunI7MjMNsUxSCIVk6IoZfQIDpRr3IKh78Qbp0y6Src605g';
-    fetch(wh,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:'💬 **New response from applicant** `'+appId+'`\n> '+txt})}).catch(function(){});
+    // Send chat message to bot API instead of webhook
+    fetch(BOT_API+'/api/chat/'+encodeURIComponent(appId),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:txt})}).catch(function(){});
   }
 
   function checkApply(){
@@ -1094,18 +1114,15 @@ body{
       if(wc(mem)<4){toast('Write at least 4 meaningful words about gaining members.','warn');return}
       if(wc(uni)<4){toast('Write at least 4 meaningful words about what makes you unique.','warn');return}
       var aid='APP-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substr(2,4).toUpperCase();
-      var embed={title:'📨 New Staff Application',description:'**App ID:** `'+aid+'`\n\nSubmitted via Eclipse State website.',color:0x3cb878,timestamp:new Date().toISOString(),fields:[{name:'🎯 Position',value:pos,inline:true},{name:'👤 Discord',value:du,inline:true},{name:'\u200b',value:'\u200b',inline:false},{name:'❓ Why Join',value:why.length>1024?why.substr(0,1021)+'...':why,inline:false},{name:'📈 Gain Members',value:mem.length>1024?mem.substr(0,1021)+'...':mem,inline:false},{name:'⭐ What They Provide',value:uni.length>1024?uni.substr(0,1021)+'...':uni,inline:false}],footer:{text:'Eclipse State · Application System'}};
-      if(notes)embed.fields.push({name:'📝 Notes',value:notes.length>1024?notes.substr(0,1021)+'...':notes,inline:false});
-      embed.fields.push({name:'\u200b',value:'\u200b',inline:false});
-      embed.fields.push({name:'⚡ Staff Actions',value:'✅ Accept | ❌ Deny | 🔄 Review\n`!respond '+aid+' Review <message>` to update.\nResponses from applicant appear in this channel.',inline:false});
       var btn=form.querySelector('button[type="submit"]'),ot=btn?btn.textContent:'';if(btn){btn.textContent='Sending…';btn.disabled=true}
-      var wh='https://discordapp.com/api/webhooks/1525613897569140776/MBDDY2J54ngrz-ZE7lNaNHunI7MjMNsUxSCIVk6IoZfQIDpRr3IKh78Qbp0y6Src605g';
-      fetch(wh,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[embed]})}).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);
-        var appObj={id:aid,position:pos,discord:du,status:'sent',date:new Date().toISOString()};
-        apps.push(appObj);saveApps(apps);saveChats(aid,[]);
+      // Send application to bot API
+      fetch(BOT_API+'/api/apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({position:pos,discord:du,why:why,members:mem,unique:uni,notes:notes})}).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(function(data){
+        var appObj={id:data.id,position:pos,discord:du,status:'sent',date:new Date().toISOString()};
+        apps.push(appObj);saveApps(apps);saveChats(data.id,[]);
+        aid=data.id;
         form.reset();
         checkApply();
-        toast('Application sent! ID: '+aid,'ok');
+        toast('Application sent! ID: '+data.id,'ok');
         if(btn){btn.textContent=ot;btn.disabled=false}
       }).catch(function(err){toast('Failed to send. Try again.','err');if(btn){btn.textContent=ot;btn.disabled=false}});
     });
