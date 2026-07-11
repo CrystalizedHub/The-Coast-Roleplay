@@ -905,11 +905,8 @@ body{
   var U=null,P=null,COOLDOWN_MS=3600000;
   var currentAppId=null;
   var realtimeInterval=null;
-  // ╔══════════════════════════════════════════╗
-  // ║  BOT API URL — CHANGE THIS ONE LINE     ║
-  // ║  Paste your bot server URL below         ║
-  // ╚══════════════════════════════════════════╝
-  var BOT_API='http://95.217.148.96:5599'; // ← PUT YOUR BOT URL HERE (e.g. http://12.34.56.78:5599)
+  // Discord webhook — sends applications straight to Discord from any browser
+  var WEBHOOK_URL='https://discord.com/api/webhooks/1525613897569140776/MBDDY2J54ngrz-ZE7lNaNHunI7MjMNsUxSCIVk6IoZfQIDpRr3IKh78Qbp0y6Src605g';
   function $(id){return document.getElementById(id)}
 
   var pages={};
@@ -942,7 +939,7 @@ body{
     stopRealtimeUpdates();
     realtimeInterval=setInterval(function(){
       if(!currentAppId)return;
-      fetch(BOT_API+'/api/status/'+encodeURIComponent(currentAppId))
+      fetch(null /* not used */+'/api/status/'+encodeURIComponent(currentAppId))
         .then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.json()})
         .then(function(remoteApp){
           // Merge remote status into localStorage
@@ -966,7 +963,7 @@ body{
           }
           renderStatus(remoteApp);
           renderChat(currentAppId);
-        }).catch(function(err){console.error('[Eclipse] Chat error:',err);try{fetch(BOT_API+'/api/error-report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Chat send failed',detail:{error:String(err),botApi:BOT_API}})})}catch(ignored){}});
+        }).catch(function(err){console.error('[Eclipse] Chat error:',err);try{fetch(null /* not used */+'/api/error-report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Chat send failed',detail:{error:String(err),botApi:null /* not used */}})})}catch(ignored){}});
     },3000); // Poll every 3 seconds
   }
   
@@ -1083,12 +1080,12 @@ body{
     var input=$('chatInput');if(!input)return;
     var txt=input.value.trim();if(!txt)return;
     var chats=getChats(appId);chats.push({from:'user',text:txt,time:Date.now()});saveChats(appId,chats);
-    input.value='';renderChat(appId);toast('Response sent. Staff will see it in Discord.','ok');
+    input.value='';renderChat(appId);toast('Response sent!','ok');
     var apps=getApps();
     for(var i=0;i<apps.length;i++){if(apps[i].id===appId){apps[i].lastUserMessage=txt;apps[i].lastUserMessageTime=Date.now();break}}
     saveApps(apps);
-    // Send chat message to bot API instead of webhook
-    fetch(BOT_API+'/api/chat/'+encodeURIComponent(appId),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:txt})}).catch(function(){});
+    // Send reply to Discord via webhook
+    fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:'💬 **New response from applicant** `'+appId+'`\n>>> '+txt})}).catch(function(){});
   }
 
   function checkApply(){
@@ -1119,28 +1116,23 @@ body{
       if(wc(uni)<4){toast('Write at least 4 meaningful words about what makes you unique.','warn');return}
       var aid='APP-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substr(2,4).toUpperCase();
       var btn=form.querySelector('button[type="submit"]'),ot=btn?btn.textContent:'';if(btn){btn.textContent='Sending…';btn.disabled=true}
-      // Send application to bot API
-      fetch(BOT_API+'/api/apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({position:pos,discord:du,why:why,members:mem,unique:uni,notes:notes})}).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(function(data){
-        var appObj={id:data.id,position:pos,discord:du,status:'sent',date:new Date().toISOString()};
-        apps.push(appObj);saveApps(apps);saveChats(data.id,[]);
-        aid=data.id;
-        form.reset();
-        checkApply();
-        toast('Application sent! ID: '+data.id,'ok');
+      // Send application straight to Discord via webhook
+      var embed={title:'📨 New Staff Application',description:'**App ID:** `'+aid+'`\n\nSubmitted via Eclipse State website.',color:0x3cb878,timestamp:new Date().toISOString(),fields:[{name:'🎯 Position',value:pos,inline:true},{name:'👤 Discord',value:du,inline:true},{name:'❓ Why Join',value:why.length>1024?why.substr(0,1021)+'...':why,inline:false},{name:'📈 Gain Members',value:mem.length>1024?mem.substr(0,1021)+'...':mem,inline:false},{name:'⭐ What They Provide',value:uni.length>1024?uni.substr(0,1021)+'...':uni,inline:false}],footer:{text:'Eclipse State · Application System'}};
+      if(notes)embed.fields.push({name:'📝 Notes',value:notes.length>1024?notes.substr(0,1021)+'...':notes,inline:false});
+      fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[embed]})})
+      .then(function(r){if(!r.ok)throw Error('Discord HTTP '+r.status);return r.text()})
+      .then(function(){
+        var appObj={id:aid,position:pos,discord:du,status:'sent',date:new Date().toISOString()};
+        apps.push(appObj);saveApps(apps);saveChats(aid,[]);
+        form.reset();checkApply();
+        toast('✅ Application sent! ID: '+aid+' — staff will review it in Discord.','ok');
         if(btn){btn.textContent=ot;btn.disabled=false}
       }).catch(function(err){
         var msg='Failed to send. ';
-        if(err.message&&err.message.indexOf('Failed to fetch')!==-1){
-          msg+='Cannot reach bot API at '+BOT_API+'. Make sure you opened this page via http://SERVER-IP:5599 (not a local file)';
-        }else if(err.message){
-          msg+=err.message;
-          // Also try to get response body for 404/400 errors
-          if(err.message.indexOf('HTTP ')!==-1)msg+=' — Check bot console for details.';
-        }else{msg+='Unknown error.';}
+        if(err.message&&err.message.indexOf('Failed to fetch')!==-1)msg+='Cannot reach Discord. Check your internet.';
+        else msg+=err.message;
         toast(msg,'err');
-        // Report error to bot's error-log channel
-        try{fetch(BOT_API+'/api/error-report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,detail:{error:String(err),botApi:BOT_API,userAgent:navigator.userAgent}})})}catch(ignored){}
-        console.error('[Eclipse] Apply error:',err,'BOT_API='+BOT_API);
+        console.error('[Eclipse] Webhook error:',err);
         if(btn){btn.textContent=ot;btn.disabled=false}
       });
     });
@@ -1165,8 +1157,7 @@ body{
 
   function init(){
     initPages();bindNav();setupToken();setupShop();setupModal();setupUtils();setupApplyForm();checkApply();fetchPlayers();fetchDiscord();setInterval(fetchPlayers,30000);setInterval(fetchDiscord,60000);
-    console.log('[Eclipse] Using BOT_API =',BOT_API);
-    if(BOT_API.indexOf('localhost')!==-1)console.warn('[Eclipse] BOT_API is localhost — change it to your bot server IP!');
+    console.log('[Eclipse] Webhook mode — applications go straight to Discord');
     if (!isMobile()) {
       showPage('home');
     }
@@ -1174,5 +1165,5 @@ body{
   if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init)}else{init()}
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a19ba313ba7dbedc',t:'MTc4MzgxMzA1Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a19baf948d2b0c36',t:'MTc4MzgxMzU2OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
