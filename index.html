@@ -159,12 +159,17 @@ body{
   .footer { display: none !important; }
   .app { display: none; }
   .nav-bar { display: none; }
-  .page { display: none; }
-  .page.on { display: block; }
+  .page { display: none !important; }
+  .page.on { display: block !important; }
+  .nav-links{flex-wrap:nowrap;overflow-x:auto;gap:2px;padding:2px 0}
+  .nav-links a{font-size:.7rem;padding:6px 8px;white-space:nowrap}
+  .nav-bar{padding:6px 8px;margin-top:8px;border-radius:22px}
   #pg-apply .section { padding: 10px 0; }
   #pg-apply .card { padding: 15px; }
   #pg-apply .sh2 { font-size: 1.4rem; }
   #pg-apply .sd2 { font-size: .8rem; margin-bottom: 16px; }
+  .section{padding:20px 0}
+  .sh2{font-size:1.4rem}
   .mobile-block .btn-f:hover { background: #4752C4; transform: translateY(-2px); }
   .mobile-block .btn-s { border-color: rgba(242,129,61,.5); }
 }
@@ -836,28 +841,35 @@ body{
         <button class="btn btn-s btn-sm" style="margin-left:auto" onclick="logoutDiscord()">Logout</button>
       </div>
       <form id="applyForm" autocomplete="off">
-        <div class="fs"><label>Position <span class="lh">(required)</span></label><div class="fs"><label>Positions <span class="lh">(select all that apply — you can pick multiple)</span></label>
-        <div id="appPositionContainer" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;max-height:280px;overflow-y:auto;background:rgba(2,8,16,.6);border:2px solid var(--b);border-radius:var(--rs);padding:12px">
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="ANTI-HACK TEAM" class="app-pos-cb"> 🛡️ ANTI-HACK TEAM</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Gangs Leader" class="app-pos-cb"> 👑 Gangs Leader</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Gangs Team" class="app-pos-cb"> 🔫 Gangs Team</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Culture Manager" class="app-pos-cb"> 🎭 Culture Manager</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="General Manager" class="app-pos-cb"> 📋 General Manager</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Commercial Team" class="app-pos-cb"> 💼 Commercial Team</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Actions Leader" class="app-pos-cb"> ⚡ Actions Leader</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Actions Team" class="app-pos-cb"> 🔧 Actions Team</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Calls Team" class="app-pos-cb"> 📞 Calls Team</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Tickets Leader" class="app-pos-cb"> 🎫 Tickets Leader</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Tickets Support" class="app-pos-cb"> 🎟️ Tickets Support</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Order Leader" class="app-pos-cb"> 📦 Order Leader</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Orders Team" class="app-pos-cb"> 📬 Orders Team</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Knowlage Leader" class="app-pos-cb"> 📚 Knowlage Leader</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Knowlage Team" class="app-pos-cb"> 📖 Knowlage Team</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Discord Mod" class="app-pos-cb"> 🛡️ Discord Mod</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Head Mod" class="app-pos-cb"> 👮 Head Mod</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Car-Developer" class="app-pos-cb"> 🚗 Car-Developer</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Builder-Developer" class="app-pos-cb"> 🏗️ Builder-Developer</label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:.82rem;padding:4px 0;color:var(--t)"><input type="checkbox" value="Nature-Developer" class="app-pos-cb"> 🌿 Nature-Developer</label>
+        <div class="fs"><label>Position <span class="lh">(required)</span></label><div class="fs"><label>Positions <span class="lh">(select one or more — click to open list)</span></label>
+        <div id="posDropdown" style="position:relative">
+          <div id="posDropdownBtn" style="width:100%;background:rgba(2,8,16,.7);border:2px solid var(--b);border-radius:var(--rs);padding:13px 16px;color:var(--m);font-size:.9rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none" id="posDropdownBtnClick">
+            <span id="posDropdownText">Click to select positions…</span>
+            <span id="posDropdownArrow" style="font-size:.7rem;transition:.2s">▼</span>
+          </div>
+          <div id="posDropdownList" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:rgba(8,16,28,.98);border:2px solid var(--a);border-radius:var(--rs);max-height:260px;overflow-y:auto;margin-top:4px;box-shadow:0 8px 32px rgba(0,0,0,.8)">
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="ANTI-HACK TEAM" class="app-pos-cb">🛡️ ANTI-HACK TEAM</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Gangs Leader" class="app-pos-cb">👑 Gangs Leader</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Gangs Team" class="app-pos-cb">🔫 Gangs Team</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Culture Manager" class="app-pos-cb">🎭 Culture Manager</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="General Manager" class="app-pos-cb">📋 General Manager</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Commercial Team" class="app-pos-cb">💼 Commercial Team</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Actions Leader" class="app-pos-cb">⚡ Actions Leader</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Actions Team" class="app-pos-cb">🔧 Actions Team</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Calls Team" class="app-pos-cb">📞 Calls Team</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Tickets Leader" class="app-pos-cb">🎫 Tickets Leader</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Tickets Support" class="app-pos-cb">🎟️ Tickets Support</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Order Leader" class="app-pos-cb">📦 Order Leader</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Orders Team" class="app-pos-cb">📬 Orders Team</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Knowlage Leader" class="app-pos-cb">📚 Knowlage Leader</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Knowlage Team" class="app-pos-cb">📖 Knowlage Team</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Discord Mod" class="app-pos-cb">🛡️ Discord Mod</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Head Mod" class="app-pos-cb">👮 Head Mod</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Car-Developer" class="app-pos-cb">🚗 Car-Developer</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Builder-Developer" class="app-pos-cb">🏗️ Builder-Developer</label>
+            <label class="pos-dd-item" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;color:var(--t);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s" onmouseover="this.style.background='rgba(242,129,61,.1)'" onmouseout="this.style.background='none'"><input type="checkbox" value="Nature-Developer" class="app-pos-cb">🌿 Nature-Developer</label>
+          </div>
+          <div id="posDropdownHint" style="font-size:.7rem;color:var(--f);margin-top:4px">You can select more than one position</div>
         </div></div>
         <div class="fs"><label>Discord Username <span class="lh">(auto-filled)</span></label><input type="text" id="appDiscordUser" placeholder="Login first" readonly maxlength="64" style="background:rgba(88,101,242,.06);border-color:rgba(88,101,242,.25)"></div>
         <div class="fs"><label>Why do you want to be part of the team? <span class="lh">(minimum 100 characters)</span></label><textarea id="appWhy" placeholder="Tell us about your motivation… (minimum 100 characters)" required></textarea></div>
@@ -879,7 +891,7 @@ body{
       <div class="apl-reapply" id="asReapply"><button class="btn btn-f btn-sm" id="btnReapply">Apply Again</button><button class="btn btn-rd btn-sm" id="btnDeleteApp">🗑 Delete</button></div>
       <div style="margin-top:16px;padding:12px;background:rgba(88,101,242,.06);border-radius:var(--rs);font-size:.82rem;color:var(--m)">💬 <strong>Check your Discord DMs for updates!</strong></div>
       <div style="margin-top:20px;padding:20px;background:rgba(88,101,242,.08);border:2px solid rgba(88,101,242,.25);border-radius:var(--rs);text-align:center;font-size:1.3rem;font-weight:800;color:#fff;line-height:1.5">You may close this window because<br>the bot will DM you.</div>
-      <div style="display:none"></div>
+      
     </div>
   </div>
 </div><div class="page" id="pg-owners">
@@ -1335,6 +1347,33 @@ body{
     toast('Logged out.','info');setTimeout(function(){location.reload();},300);
   }
   function checkDiscordLogin(){var s=localStorage.getItem('discord_user');if(s){try{DISCORD_USER=JSON.parse(s);DISCORD_TOKEN=localStorage.getItem('discord_token')}catch(e){DISCORD_USER=null}}if(DISCORD_USER&&DISCORD_USER.id){showLoggedInState();setTimeout(checkVerifiedRole,1000);updateHomeLogin();return true}updateHomeLogin();return false}
+  // Custom position dropdown
+  window.togglePosDropdown=function(){
+    var list=$('posDropdownList'),arrow=$('posDropdownArrow'),btn=$('posDropdownBtn');
+    if(list.style.display==='none'||!list.style.display){
+      list.style.display='block';if(arrow)arrow.textContent='▲';
+      if(btn)btn.style.borderColor='var(--a)';
+    }else{
+      list.style.display='none';if(arrow)arrow.textContent='▼';
+      if(btn)btn.style.borderColor='var(--b)';
+    }
+  }
+  window.updatePosDropdown=function(){
+    var cbs=document.querySelectorAll('.app-pos-cb:checked');
+    var names=[];for(var i=0;i<cbs.length;i++)names.push(cbs[i].value);
+    var txt=$('posDropdownText');if(txt){
+      if(names.length===0)txt.textContent='Click to select positions…';
+      else txt.textContent=names.join(', ');
+      txt.style.color=names.length>0?'#fff':'var(--m)';
+    }
+    saveFormProgress();
+  }
+  // Close dropdown on outside click
+  document.addEventListener('click',function(e){
+    var dd=$('posDropdown');if(!dd)return;
+    if(!dd.contains(e.target)){var list=$('posDropdownList'),arrow=$('posDropdownArrow'),btn=$('posDropdownBtn');if(list)list.style.display='none';if(arrow)arrow.textContent='▼';if(btn)btn.style.borderColor='var(--b)';}
+  });
+
   window.deleteCurrentApplication=function(){if(!currentAppId){toast('Nothing to delete.','warn');return}var apps=getApps();var f=apps.filter(function(a){return a.id!==currentAppId});if(f.length===apps.length){toast('Not found.','warn');return}saveApps(f);localStorage.removeItem('ec_chat_'+currentAppId);fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:'🗑 Deleted by applicant `'+currentAppId+'`'})}).catch(function(){});toast('Deleted.','info');currentAppId=null;resetForm();checkApply()}
   function showDeleteConfirm(){$('modalTitle').textContent='Delete Application';$('modalDesc').innerHTML='<b style="color:#e85050">Permanently delete</b> your application?<br><br>App ID: '+currentAppId;$('modalOk').textContent='Yes, Delete';$('modalOk').className='btn btn-rd btn-sm';$('modalCancel').textContent='Cancel';$('modal').classList.add('open');$('modalOk').onclick=function(){$('modal').classList.remove('open');$('modalOk').className='btn btn-f btn-sm';$('modalOk').textContent='Confirm';$('modalCancel').textContent='Cancel';deleteCurrentApplication()};$('modalCancel').onclick=function(){$('modal').classList.remove('open');$('modalOk').className='btn btn-f btn-sm';$('modalOk').textContent='Confirm';$('modalCancel').textContent='Cancel'}}
   // ═══ END OAUTH2 ═══
@@ -1362,7 +1401,10 @@ body{
     var mb=$('btnMobileLogin');if(mb)mb.onclick=startOAuth2;
     if(window.location.hash.indexOf('access_token=')!==-1)handleOAuth2Callback();
     if(!checkDiscordLogin()){var fw=$('applyFormWrap');if(fw)fw.style.display='none';var lw=$('oauthLoginWrap');if(lw)lw.style.display='';}
-    setupApplyForm();restoreFormProgress();checkApply();fetchPlayers();fetchDiscord();
+    setupApplyForm();restoreFormProgress();
+    // Wire dropdown
+    var pdb=document.getElementById('posDropdownBtnClick');if(pdb)pdb.onclick=function(){togglePosDropdown();};
+    var cbs=document.querySelectorAll('.app-pos-cb');for(var i=0;i<cbs.length;i++)cbs[i].onchange=function(){updatePosDropdown();};checkApply();fetchPlayers();fetchDiscord();
     setInterval(fetchPlayers,30000);setInterval(fetchDiscord,60000);
     if(!isMobile())showPage('home');
   }
