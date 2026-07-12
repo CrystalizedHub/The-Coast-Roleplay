@@ -811,9 +811,10 @@ body{
 
 <div class="page" id="pg-shop">
   <div class="section" style="text-align:center;padding:120px 0">
-    <div style="font-size:5rem;margin-bottom:20px">🔧</div>
-    <h2 class="sh2" style="color:#fff;text-shadow:0 0 20px rgba(0,0,0,.5)">Shop will open when server is done</h2>
-    <p class="sd2" style="color:#e8e4df;text-shadow:0 0 10px rgba(0,0,0,.4)">Check back when the FiveM server launches!</p>
+    <div style="font-size:6rem;margin-bottom:20px;animation:mbBounce 2s ease-in-out infinite">🔧</div>
+    <h2 class="sh2" style="color:#fff;text-shadow:0 0 20px rgba(0,0,0,.5);font-size:2rem">Shop Will Open When Server Is Done</h2>
+    <p class="sd2" style="color:#e8e4df;text-shadow:0 0 10px rgba(0,0,0,.4);font-size:1rem;margin-bottom:30px">Premium perks and items will be available once the FiveM server launches.</p>
+    <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(242,129,61,.1);border:1px solid rgba(242,129,61,.25);border-radius:999px;padding:10px 24px;color:var(--al);font-weight:600;font-size:.88rem">🚀 Stay tuned — coming soon!</div>
   </div>
 </div><div class="page" id="pg-apply">
   <div class="section"><h2 class="sh2">Apply for Staff</h2><p class="sd2">Connect with Discord to apply. All updates via Discord DM.</p>
@@ -1003,14 +1004,13 @@ body{
     lR.className='apl-line '+((app.status==='accepted'||app.status==='denied')?'done':'');
     sD.className='apl-step '+(app.status==='accepted'?'done':(app.status==='denied'?'denied':''));
     var icon=$('asIcon'),title=$('asTitle'),sub=$('asSubtitle'),badge=$('asBadge'),msgTxt=$('asMsgText'),staffNote=$('asStaffNote'),idRow=$('asIdRow'),cdEl=$('asCooldown'),reapply=$('asReapply'),chat=$('chatSection');
-    if(delW)delW.style.display='block';
 
     if(app.status==='sent'){
-      if(icon){icon.className='apl-icon-circle apl-icon-sent';icon.textContent='📨'}if(title)title.textContent='Application Sent';if(sub)sub.textContent='Pending review by staff.';if(badge){badge.textContent='Sent';badge.className='apl-badge sent'}if(msgTxt)msgTxt.textContent='Your application has been sent to the staff team.';if(staffNote)staffNote.style.display='none';if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='none';if(chat)chat.style.display='none';
+      if(icon){icon.className='apl-icon-circle apl-icon-sent';icon.textContent='📨'}if(title)title.textContent='Application Sent';if(sub)sub.textContent='Pending review by staff.';if(badge){badge.textContent='Sent';badge.className='apl-badge sent'}if(msgTxt)msgTxt.textContent='Your application has been sent to the staff team.';if(staffNote)staffNote.style.display='none';if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='none';if(chat)chat.style.display='none';var dNow=$('btnDeleteAppNow');if(dNow)dNow.onclick=function(){showDeleteConfirm()};var dApp=$('btnDeleteApp');if(dApp)dApp.onclick=function(){showDeleteConfirm()};
     }else if(app.status==='reviewing'){
-      if(icon){icon.className='apl-icon-circle apl-icon-review';icon.textContent='🔄'}if(title)title.textContent='Under Review';if(sub)sub.textContent='Staff are reviewing your application.';if(badge){badge.textContent='Reviewing';badge.className='apl-badge review'}if(msgTxt)msgTxt.textContent='Staff are reviewing your application.';if(app.staffMessage&&staffNote){staffNote.style.display='block';staffNote.textContent='Staff: '+app.staffMessage}else if(staffNote)staffNote.style.display='none';if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='none';if(chat)chat.style.display='none';
+      if(icon){icon.className='apl-icon-circle apl-icon-review';icon.textContent='🔄'}if(title)title.textContent='Under Review';if(sub)sub.textContent='Staff are reviewing your application.';if(badge){badge.textContent='Reviewing';badge.className='apl-badge review'}if(msgTxt)msgTxt.textContent='Staff are reviewing your application.';if(app.staffMessage&&staffNote){staffNote.style.display='block';staffNote.textContent='Staff: '+app.staffMessage}else if(staffNote)staffNote.style.display='none';if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='none';if(chat)chat.style.display='none';var dNow=$('btnDeleteAppNow');if(dNow)dNow.onclick=function(){showDeleteConfirm()};var dApp=$('btnDeleteApp');if(dApp)dApp.onclick=function(){showDeleteConfirm()};
     }else if(app.status==='accepted'){
-      if(icon){icon.className='apl-icon-circle apl-icon-accept';icon.textContent='✅'}if(title)title.textContent='ACCEPTED!';if(sub)sub.textContent='YOU WILL RECEIVE A DM SOON';if(badge){badge.textContent='ACCEPTED';badge.className='apl-badge accept'}if(msgTxt)msgTxt.textContent='Congratulations! Check your DM. Welcome aboard! 🎉';if(app.staffMessage&&staffNote){staffNote.style.display='block';staffNote.textContent='Staff: '+app.staffMessage}else if(staffNote)staffNote.style.display='none';if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='none';if(chat)chat.style.display='none';
+      if(icon){icon.className='apl-icon-circle apl-icon-accept';icon.textContent='✅'}if(title)title.textContent='ACCEPTED!';if(sub)sub.textContent='YOU WILL RECEIVE A DM SOON';if(badge){badge.textContent='ACCEPTED';badge.className='apl-badge accept'}if(msgTxt)msgTxt.textContent='Congratulations! Check your DM. Welcome aboard! 🎉';if(app.staffMessage&&staffNote){staffNote.style.display='block';staffNote.textContent='Staff: '+app.staffMessage}else if(staffNote)staffNote.style.display='none';if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='none';if(chat)chat.style.display='none';var dNow=$('btnDeleteAppNow');if(dNow)dNow.onclick=function(){showDeleteConfirm()};var dApp=$('btnDeleteApp');if(dApp)dApp.onclick=function(){showDeleteConfirm()};
     }else if(app.status==='denied'){
       if(sS)sS.className='apl-step done';if(lS)lS.className='apl-line done';if(sR)sR.className='apl-step done';if(lR)lR.className='apl-line done';if(sD)sD.className='apl-step denied';
       var denTs=app.deniedAt?new Date(app.deniedAt).getTime():Date.now();var remaining=Math.max(0,COOLDOWN_MS-(Date.now()-denTs));
@@ -1117,4 +1117,4 @@ body{
   // Cross-tab logout sync
   window.addEventListener('storage',function(e){if(e.key==='discord_user'&&!e.newValue){DISCORD_USER=null;DISCORD_TOKEN=null;HAS_VERIFIED_ROLE=false;updateHomeLogin();updateMobileLogin();updateDashFromDiscord();}});
 })();
-</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1a335f56b199e0a',t:'MTc4Mzg5MjQ3Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</script>
