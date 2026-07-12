@@ -160,6 +160,13 @@ body{
   .scene, .app, .nav-bar, .footer {
     display: none !important;
   }
+  .mobile-block .btn-f:hover {
+    background: #4752C4;
+    transform: translateY(-2px);
+  }
+  .mobile-block .btn-s {
+    border-color: rgba(242,129,61,.5);
+  }
 }
 
 .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
@@ -577,25 +584,20 @@ body{
 <!-- Mobile Block Overlay -->
 <div class="mobile-block" id="mobileBlock">
   <img src="uploads/eclipse-logo-new.png" alt="Eclipse State" class="mb-logo">
-  <div class="mb-icon">📱</div>
-  <h1>Desktop Required</h1>
-  <p>The Eclipse State website is optimized for desktop browsers. You'll need to be on a computer to access the full application and management features.</p>
-  <div class="mb-discord-box">
-    <h2>💬 Join Our Discord</h2>
-    <p>Connect with our community, get support, apply for staff positions, and stay updated on server news — all through Discord!</p>
+  <div class="mb-icon">🔐</div>
+  <h1>Login with Discord</h1>
+  <p>Verify your account to access the full site. You'll be auto-added to our Discord server.</p>
+  <button class="btn btn-f" id="btnMobileLogin" style="font-size:1rem;padding:14px 32px;background:#5865F2;box-shadow:0 4px 20px rgba(88,101,242,.4);margin-bottom:12px">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.74 19.74 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.1 13.1 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.3 12.3 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.84 19.84 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+    Login with Discord
+  </button>
+  <div id="mobileLoggedIn" style="display:none">
+    <img id="mobileAvatar" src="" style="width:48px;height:48px;border-radius:50%;margin-bottom:8px">
+    <p style="color:#fff;font-weight:600;margin-bottom:0" id="mobileName">—</p>
+    <p style="color:var(--m);font-size:.85rem;margin-bottom:16px">Logged in</p>
+    <button class="btn btn-s btn-sm" onclick="logoutDiscord()">Logout</button>
   </div>
-  <a href="https://discord.gg/cU3CH7z494" target="_blank" rel="noopener" class="mb-discord-btn">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.74 19.74 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.1 13.1 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.3 12.3 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.84 19.84 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-    Join Eclipse State Discord
-  </a>
-  <p class="mb-info">We're hiring! Apply for Discord Support, Moderator, Community Manager, and more roles directly on our Discord server.</p>
-  <div class="mb-positions">
-    <span>🎫 Discord Support</span>
-    <span>🛡️ Moderator</span>
-    <span>🌐 Community Manager</span>
-    <span>💻 Developer</span>
-    <span>🎉 Party Team</span>
-  </div>
+  <p class="mb-info" style="margin-top:12px">Auto-joins our Discord • Verified role • Dashboard access</p>
 </div>
 
 <div class="scene" aria-hidden="true">
@@ -883,6 +885,15 @@ body{
   
   if (isMobile()) {
     document.getElementById('mobileBlock').style.display = 'flex';
+    // On mobile, check if already logged in
+    if(DISCORD_USER&&DISCORD_USER.id){
+      var mli=$('mobileLoggedIn'),mb=$('btnMobileLogin');
+      if(mb)mb.style.display='none';
+      if(mli){mli.style.display='block';
+        if($('mobileName'))$('mobileName').textContent=DISCORD_USER.global_name||DISCORD_USER.username;
+        if($('mobileAvatar')&&DISCORD_USER.avatar)$('mobileAvatar').src='https://cdn.discordapp.com/avatars/'+DISCORD_USER.id+'/'+DISCORD_USER.avatar+'.png?size=64';
+      }
+    }
   }
 
   (function(){var sb=document.getElementById('sparkleBox');var stb=document.getElementById('starBox');
@@ -1108,7 +1119,20 @@ body{
       if($('loggedInName'))$('loggedInName').textContent=DISCORD_USER.global_name||DISCORD_USER.username;
       if($('loggedInAvatar')&&DISCORD_USER.avatar)$('loggedInAvatar').src='https://cdn.discordapp.com/avatars/'+DISCORD_USER.id+'/'+DISCORD_USER.avatar+'.png?size=64';
     }
-    updateHomeLogin();
+    updateHomeLogin();updateMobileLogin();
+  }
+  function updateMobileLogin(){
+    var mli=$('mobileLoggedIn'),mb=$('btnMobileLogin');
+    if(DISCORD_USER&&DISCORD_USER.id){
+      if(mb)mb.style.display='none';
+      if(mli){mli.style.display='block';
+        if($('mobileName'))$('mobileName').textContent=DISCORD_USER.global_name||DISCORD_USER.username;
+        if($('mobileAvatar')&&DISCORD_USER.avatar)$('mobileAvatar').src='https://cdn.discordapp.com/avatars/'+DISCORD_USER.id+'/'+DISCORD_USER.avatar+'.png?size=64';
+      }
+    }else{
+      if(mb)mb.style.display='';
+      if(mli)mli.style.display='none';
+    }
   }
   function updateHomeLogin(){
     var btn=$('btnHomeLogin'),hli=$('homeLoggedIn');
@@ -1135,6 +1159,9 @@ body{
     if(hlb){if(hb)hb.style.display='';if(hli)hli.style.display='none';}
     stopRealtimeUpdates();currentAppId=null;
     var form=$('applyForm');if(form)form.reset();
+    // Reset mobile
+    var mli=$('mobileLoggedIn'),mb=$('btnMobileLogin');
+    if(mb)mb.style.display='';if(mli)mli.style.display='none';
     navigate('home');toast('Logged out.','info');
   }
   function checkDiscordLogin(){var s=localStorage.getItem('discord_user');if(s){try{DISCORD_USER=JSON.parse(s);DISCORD_TOKEN=localStorage.getItem('discord_token')}catch(e){DISCORD_USER=null}}if(DISCORD_USER&&DISCORD_USER.id){showLoggedInState();setTimeout(checkVerifiedRole,1000);updateHomeLogin();return true}updateHomeLogin();return false}
@@ -1162,6 +1189,7 @@ body{
     initPages();bindNav();setupToken();setupShop();setupModal();setupUtils();
     var lb=$('btnDiscordLogin');if(lb)lb.onclick=startOAuth2;
     var hb=$('btnHomeLogin');if(hb)hb.onclick=startOAuth2;
+    var mb=$('btnMobileLogin');if(mb)mb.onclick=startOAuth2;
     if(window.location.hash.indexOf('access_token=')!==-1)handleOAuth2Callback();
     if(!checkDiscordLogin()){var fw=$('applyFormWrap');if(fw)fw.style.display='none';var lw=$('oauthLoginWrap');if(lw)lw.style.display='';}
     setupApplyForm();checkApply();fetchPlayers();fetchDiscord();
