@@ -845,6 +845,7 @@ body{
       <div class="apl-icon-circle apl-icon-sent" id="asIcon">📨</div><div class="apl-title" id="asTitle">Application Sent</div><div class="apl-subtitle" id="asSubtitle"></div><div class="apl-badge sent" id="asBadge">Sent</div>
       <div class="apl-msg-box" id="asMsgBox"><div class="apl-msg-label" id="asMsgLabel">Status</div><div class="apl-msg-text" id="asMsgText"></div><div class="apl-staff-note" id="asStaffNote"></div></div>
       <div class="apl-id-row" id="asIdRow">ID: —</div>
+      <div style="margin-top:10px" id="asDeleteAlways"><button class="btn btn-rd btn-sm" id="btnDeleteAppNow">🗑 Close Application</button></div>
       <div class="apl-cooldown" id="asCooldown"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Re-apply in: <span class="apl-countdown" id="asCountdown">—</span></span></div>
       <div class="apl-reapply" id="asReapply"><button class="btn btn-f btn-sm" id="btnReapply">Apply Again</button><button class="btn btn-rd btn-sm" id="btnDeleteApp">🗑 Delete</button></div>
       <div style="margin-top:16px;padding:12px;background:rgba(88,101,242,.06);border-radius:var(--rs);font-size:.82rem;color:var(--m)">💬 <strong>Check your Discord DMs for updates!</strong></div>
@@ -996,9 +997,10 @@ body{
       if(app.staffMessage&&staffNote){staffNote.style.display='block';staffNote.textContent='Staff: "'+app.staffMessage+'"'}else if(staffNote)staffNote.style.display='none';
       if(chat)chat.style.display='none';
       if(remaining>0){if(cdEl){cdEl.style.display='flex';cdEl.querySelector('span').innerHTML='Re-apply in: <span class="apl-countdown" id="asCountdown">'+fmtCountdown(remaining)+'</span>';}if(reapply)reapply.style.display='none';tickCountdown($('asCountdown'),remaining,app)}
-      else{if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='flex';if($('btnReapply'))$('btnReapply').onclick=function(){resetForm();checkApply()};if($('btnDeleteApp'))$('btnDeleteApp').onclick=function(){showDeleteConfirm()}}
+      else{if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='flex';if($('btnReapply'))$('btnReapply').onclick=function(){resetForm();checkApply()};if($('btnDeleteAppNow'))$('btnDeleteAppNow').onclick=function(){showDeleteConfirm()};if($('btnDeleteApp'))$('btnDeleteApp').onclick=function(){showDeleteConfirm()};if($('btnDeleteAppNow'))$('btnDeleteAppNow').onclick=function(){showDeleteConfirm()}}
     }
     if(idRow)idRow.textContent='ID: '+app.id;
+    var delBtn=$('btnDeleteAppNow');if(delBtn)delBtn.onclick=function(){showDeleteConfirm()};
     var dbx=$('btnDeleteApp');if(dbx)dbx.onclick=function(){showDeleteConfirm()};
   }
 
@@ -1007,7 +1009,7 @@ body{
     if(!el)return;if(el._iv)clearInterval(el._iv);
     var iv=setInterval(function(){
       var denTs=app.deniedAt?new Date(app.deniedAt).getTime():Date.now();var r=remaining-(Date.now()-denTs);
-      if(r<=0){el.textContent='00:00';clearInterval(iv);var cd=$('asCooldown'),rp=$('asReapply');if(cd)cd.style.display='none';if(rp)rp.style.display='flex';if($('btnReapply'))$('btnReapply').onclick=function(){resetForm();checkApply()};if($('btnDeleteApp'))$('btnDeleteApp').onclick=function(){showDeleteConfirm()};return}
+      if(r<=0){el.textContent='00:00';clearInterval(iv);var cd=$('asCooldown'),rp=$('asReapply');if(cd)cd.style.display='none';if(rp)rp.style.display='flex';if($('btnReapply'))$('btnReapply').onclick=function(){resetForm();checkApply()};if($('btnDeleteAppNow'))$('btnDeleteAppNow').onclick=function(){showDeleteConfirm()};if($('btnDeleteApp'))$('btnDeleteApp').onclick=function(){showDeleteConfirm()};return}
       el.textContent=fmtCountdown(r);
     },1000);el._iv=iv;
   }
@@ -1058,6 +1060,7 @@ body{
     currentAppId=last.id;
     renderStatus(last);
     startRealtimeUpdates();
+    var delBtn=$('btnDeleteAppNow');if(delBtn)delBtn.onclick=function(){showDeleteConfirm()};
     var dbx=$('btnDeleteApp');if(dbx)dbx.onclick=function(){showDeleteConfirm()};
   }
 
@@ -1134,5 +1137,5 @@ body{
   if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init)}else{init()}
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a19c36a1dd3176bf',t:'MTc4MzgxOTEwMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
