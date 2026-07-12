@@ -317,7 +317,7 @@ body{
 .nav-bar{display:flex;align-items:center;justify-content:center;padding:8px 18px;margin-top:14px;background:var(--s);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--b);border-radius:var(--rp);gap:6px;flex-wrap:wrap;box-shadow:var(--sh)}
 .nav-logo{cursor:pointer;display:flex;align-items:center;flex-shrink:0}
 .nav-logo img{height:42px;width:auto;border-radius:9px;box-shadow:0 0 18px rgba(242,129,61,.3)}
-.nav-links{display:flex;gap:1px;flex-wrap:wrap;justify-content:center}
+.nav-links{display:flex;gap:1px;flex-wrap:wrap}
 .nav-links a{display:inline-flex;align-items:center;gap:4px;color:var(--m);text-decoration:none;padding:8px 12px;border-radius:var(--rp);font-size:.82rem;font-weight:500;transition:var(--e);cursor:pointer;white-space:nowrap}
 .nav-links a svg{width:14px;height:14px;opacity:.7;transition:var(--e)}
 .nav-links a:hover{color:#fff;background:rgba(255,255,255,.05)}
@@ -802,99 +802,42 @@ body{
 </div>
 
 <div class="page" id="pg-apply">
-  <div class="section"><h2 class="sh2">Apply for Staff</h2><p class="sd2">Want to help run Eclipse State? Fill out the form and we'll review your application.</p>
+  <div class="section"><h2 class="sh2">Apply for Staff</h2><p class="sd2">Login with Discord to apply. All updates via Discord DM.</p>
     <div class="card al2" id="oauthLoginWrap" style="text-align:center;padding:40px">
-      <div style="font-size:4rem;margin-bottom:16px">🔐</div>
-      <h3 style="margin-bottom:8px;font-size:1.3rem">Login with Discord</h3>
-      <p style="color:var(--m);margin-bottom:30px;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.6">
-        You must verify your Discord account before applying. This allows us to:
-      </p>
-      <div style="text-align:left;max-width:400px;margin:0 auto 30px;line-height:2;font-size:.9rem;color:var(--t)">
-        <div>✅ Send you DM updates on your application</div>
-        <div>✅ Link your Discord identity to your application</div>
-        <div>✅ No password — just one click to authorize</div>
-      </div>
-      <p style="color:var(--al);margin-bottom:24px;font-size:.85rem">
-        <a href="https://discord.gg/cU3CH7z494" target="_blank" style="color:var(--al);text-decoration:underline">Join the Discord server first</a> so staff can DM you.
-      </p>
-      <button class="btn btn-f" id="btnDiscordLogin" style="font-size:1rem;padding:14px 32px;background:#5865F2;box-shadow:0 4px 20px rgba(88,101,242,.4);margin-bottom:16px">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.74 19.74 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.1 13.1 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.3 12.3 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.84 19.84 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-        Login with Discord
-      </button>
-      <p style="font-size:.75rem;color:var(--f);margin-top:16px">Only your username and avatar are shared.</p>
-      <div style="background:rgba(88,101,242,.08);border:1px solid rgba(88,101,242,.15);border-radius:var(--rs);padding:12px;margin-top:16px;text-align:left;font-size:.75rem;color:var(--m);line-height:1.6;max-width:400px;margin-left:auto;margin-right:auto">
-        <strong>🔧 Setup:</strong> Add this to Discord OAuth2 Redirects:<br>
-        <code id="oauthRedirectUrl" style="display:block;background:rgba(0,0,0,.3);padding:6px 10px;border-radius:6px;margin:6px 0;color:#fff;font-family:monospace;font-size:.8rem;word-break:break-all"></code>
-        <a href="https://discord.com/developers/applications/1525638265254707352/oauth2" target="_blank" style="color:var(--blu)">discord.com/developers → OAuth2 → Redirects</a>
-      </div>
+      <div style="font-size:4rem;margin-bottom:16px">🔐</div><h3 style="margin-bottom:8px;font-size:1.3rem">Login with Discord</h3>
+      <p style="color:var(--m);margin-bottom:20px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.6">Verify to apply. You'll auto-join the server and get dashboard access.</p>
+      <div style="text-align:left;max-width:360px;margin:0 auto 24px;line-height:2;font-size:.9rem;color:var(--t)"><div>✅ Auto-join Eclipse State Discord</div><div>✅ Get Verified role for dashboard</div><div>✅ Receive DM updates on your app</div></div>
+      <button class="btn btn-f" id="btnDiscordLogin" style="font-size:1rem;padding:14px 32px;background:#5865F2;box-shadow:0 4px 20px rgba(88,101,242,.4);margin-bottom:12px"><svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.74 19.74 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.1 13.1 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.3 12.3 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.84 19.84 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg> Login with Discord</button>
+      <p style="font-size:.75rem;color:var(--f)">Only username and avatar are shared.</p>
     </div>
-
     <div class="card al2" id="applyFormWrap" style="display:none">
       <div id="loggedInBanner" style="background:rgba(88,101,242,.12);border:1px solid rgba(88,101,242,.25);border-radius:var(--rs);padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px">
-        <img id="loggedInAvatar" src="" style="width:36px;height:36px;border-radius:50%">
-        <div><strong style="color:#fff" id="loggedInName">—</strong><br><span style="font-size:.78rem;color:var(--m)">Logged in via Discord — <a href="https://discord.gg/cU3CH7z494" target="_blank" style="color:var(--blu);text-decoration:underline">Join Server</a></span></div>
+        <img id="loggedInAvatar" src="" style="width:36px;height:36px;border-radius:50%"><div><strong style="color:#fff" id="loggedInName">—</strong><br><span style="font-size:.78rem;color:var(--m)">Logged in via Discord</span></div>
+        <span id="roleBadge" style="display:none;background:rgba(60,184,120,.15);color:var(--gn);padding:4px 12px;border-radius:var(--rp);font-size:.7rem;font-weight:700">✅ Verified</span>
         <button class="btn btn-s btn-sm" style="margin-left:auto" onclick="logoutDiscord()">Logout</button>
       </div>
       <form id="applyForm" autocomplete="off">
-        <div class="fs"><label>Position <span class="lh">(required)</span></label>
-          <select id="appPosition" required><option value="" disabled selected>Select a position…</option>
-            <option value="Ticket Support">🎫 Ticket Support (Discord)</option>
-            <option value="Discord Moderator">🛡️ Discord Moderator</option>
-            <option value="In-Game Admin">🎮 In-Game Admin</option>
-            <option value="Party Team">🎉 Party &amp; Events Team</option>
-            <option value="Developer">💻 Developer</option>
-            <option value="Media Team">📸 Media / Content Creator</option>
-            <option value="Community Manager">🌐 Community Manager</option>
-            <option value="Other">🔧 Other</option></select></div>
-        <div class="fs"><label>Discord Username <span class="lh">(auto-filled from login)</span></label>
-          <input type="text" id="appDiscordUser" placeholder="Login with Discord first" readonly maxlength="64" style="background:rgba(88,101,242,.06);border-color:rgba(88,101,242,.25)"></div>
-        <div class="fs"><label>Why do you want to be part of the team?</label>
-          <textarea id="appWhy" placeholder="Tell us about your motivation, experience, and what drives you… (minimum 30 characters)" required></textarea></div>
-        <div class="fs"><label>Will you help us gain members / joins? How?</label>
-          <textarea id="appMembers" placeholder="What strategies or connections do you have to grow the community? (minimum 20 characters)" required></textarea></div>
-        <div class="fs"><label>What will you bring that others won't?</label>
-          <textarea id="appUnique" placeholder="What makes you stand out? Skills, ideas, personality — be specific. (minimum 20 characters)" required></textarea></div>
-        <div class="fs"><label>Additional Notes <span class="lh">(optional)</span></label>
-          <textarea id="appNotes" placeholder="Anything else you want us to know…"></textarea></div>
-        <div class="fn2"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><strong>Write detailed answers.</strong> Spam or one-word applications will be ignored. Your application is sent to staff via Discord. If denied, you must wait <strong>1 hour</strong> before re-applying. Responses from staff appear in the chat below.</div></div>
+        <div class="fs"><label>Position <span class="lh">(required)</span></label><select id="appPosition" required><option value="" disabled selected>Select a position…</option><option value="Ticket Support">🎫 Ticket Support (Discord)</option><option value="Discord Moderator">🛡️ Discord Moderator</option><option value="In-Game Admin">🎮 In-Game Admin</option><option value="Party Team">🎉 Party &amp; Events Team</option><option value="Developer">💻 Developer</option><option value="Media Team">📸 Media / Content Creator</option><option value="Community Manager">🌐 Community Manager</option><option value="Other">🔧 Other</option></select></div>
+        <div class="fs"><label>Discord Username <span class="lh">(auto-filled)</span></label><input type="text" id="appDiscordUser" placeholder="Login first" readonly maxlength="64" style="background:rgba(88,101,242,.06);border-color:rgba(88,101,242,.25)"></div>
+        <div class="fs"><label>Why do you want to be part of the team?</label><textarea id="appWhy" placeholder="Tell us about your motivation… (min 30 chars)" required></textarea></div>
+        <div class="fs"><label>Will you help us gain members? How?</label><textarea id="appMembers" placeholder="What strategies? (min 20 chars)" required></textarea></div>
+        <div class="fs"><label>What will you bring that others won't?</label><textarea id="appUnique" placeholder="What makes you stand out? (min 20 chars)" required></textarea></div>
+        <div class="fs"><label>Additional Notes <span class="lh">(optional)</span></label><textarea id="appNotes" placeholder="Anything else…"></textarea></div>
+        <div class="fn2"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><strong>All updates via Discord DM.</strong> You'll be notified when accepted, denied, or when staff respond.</div></div>
         <div class="fsr"><button type="submit" class="btn btn-gn">Submit Application</button></div>
       </form>
     </div>
-
     <div class="card apl-status" id="applyStatus">
-      <div class="apl-steps" id="asSteps">
-        <div class="apl-step done" id="stepSent">✓</div>
-        <div class="apl-line done" id="lineSent"></div>
-        <div class="apl-step active" id="stepReview">🔄</div>
-        <div class="apl-line" id="lineReview"></div>
-        <div class="apl-step" id="stepDecision">⚡</div>
-      </div>
-      <div class="apl-icon-circle apl-icon-sent" id="asIcon">📨</div>
-      <div class="apl-title" id="asTitle">Application Sent</div>
-      <div class="apl-subtitle" id="asSubtitle"></div>
-      <div class="apl-badge sent" id="asBadge">Sent</div>
-      <div class="apl-msg-box" id="asMsgBox">
-        <div class="apl-msg-label" id="asMsgLabel">Status</div>
-        <div class="apl-msg-text" id="asMsgText"></div>
-        <div class="apl-staff-note" id="asStaffNote"></div>
-      </div>
+      <div class="apl-steps" id="asSteps"><div class="apl-step done" id="stepSent">✓</div><div class="apl-line done" id="lineSent"></div><div class="apl-step active" id="stepReview">🔄</div><div class="apl-line" id="lineReview"></div><div class="apl-step" id="stepDecision">⚡</div></div>
+      <div class="apl-icon-circle apl-icon-sent" id="asIcon">📨</div><div class="apl-title" id="asTitle">Application Sent</div><div class="apl-subtitle" id="asSubtitle"></div><div class="apl-badge sent" id="asBadge">Sent</div>
+      <div class="apl-msg-box" id="asMsgBox"><div class="apl-msg-label" id="asMsgLabel">Status</div><div class="apl-msg-text" id="asMsgText"></div><div class="apl-staff-note" id="asStaffNote"></div></div>
       <div class="apl-id-row" id="asIdRow">ID: —</div>
-      <div style="margin-top:12px" id="asDeleteWrap"><button class="btn btn-rd btn-sm" id="btnDeleteAppAlways">🗑 Delete Application</button></div>
       <div class="apl-cooldown" id="asCooldown"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Re-apply in: <span class="apl-countdown" id="asCountdown">—</span></span></div>
-      <div class="apl-reapply" id="asReapply"><button class="btn btn-f btn-sm" id="btnReapply">Apply Again</button><button class="btn btn-rd btn-sm" id="btnDeleteApp">🗑 Delete Application</button></div>
-      <div class="chat-section" id="chatSection">
-        <div class="chat-header">Response Chat <span class="live-indicator">LIVE</span></div>
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="chat-input-row">
-          <input type="text" id="chatInput" placeholder="Type your response to staff…" maxlength="500">
-          <button class="btn btn-f btn-sm" id="chatSend">Send</button>
-        </div>
-      </div>
+      <div class="apl-reapply" id="asReapply"><button class="btn btn-f btn-sm" id="btnReapply">Apply Again</button><button class="btn btn-rd btn-sm" id="btnDeleteApp">🗑 Delete</button></div>
+      <div style="margin-top:16px;padding:12px;background:rgba(88,101,242,.06);border-radius:var(--rs);font-size:.82rem;color:var(--m)">💬 <strong>Check your Discord DMs for updates!</strong></div>
     </div>
   </div>
-</div>
-
-<div class="page" id="pg-owners">
+</div><div class="page" id="pg-owners">
   <div class="section"><h2 class="sh2" style="text-align:center">Server Ownership</h2><p class="sd2" style="text-align:center">The founders who built Eclipse State from the ground up.</p>
     <div class="og">
       <div class="card oc"><img src="https://cdn.discordapp.com/avatars/1147409272087519263/ccd5bed55f2b6b52b21988499b22c4d6.png?size=256" alt="75e0" class="opfp" loading="lazy" onerror="this.style.display='none'"><h3>75e0 <small style="color:var(--m);font-weight:400">(xcq.v)</small></h3><span class="ot">Owner / Developer</span><div class="od">Discord: xcq.v</div><p class="ob">Founder of Eclipse State. Full-stack developer responsible for all server infrastructure, custom scripts, and the web platform.</p>
@@ -937,22 +880,19 @@ body{
   var U=null,P=null,COOLDOWN_MS=3600000;
   var currentAppId=null;
   var realtimeInterval=null;
-  // Discord webhook — sends applications straight to Discord from any browser
-  // ═══════ CONFIG ═══════
+  // ═══ OAuth2 Config ═══
   var DISCORD_CLIENT_ID='1525638265254707352';
   var DISCORD_REDIRECT_URI=window.location.origin;
-  var DISCORD_GUILD_ID='1525359528659652669';
+  var GUILD_ID='1525359528659652669';
+  var VERIFIED_ROLE_ID='1525598557778739250';
   var WEBHOOK_URL='https://discordapp.com/api/webhooks/'+'1525613897569140776'+'/'+'MBDDY2J54ngrz-ZE7lNaNHunI7MjMNsUxSCIVk6IoZfQIDpRr3IKh78Qbp0y6Src605g';
-  var DISCORD_USER=null;
-  var DISCORD_TOKEN=null;
-  var oauthState='';
-  // ═══════════════════════
+  var DISCORD_USER=null,DISCORD_TOKEN=null,HAS_VERIFIED_ROLE=false,oauthState='';
   function $(id){return document.getElementById(id)}
 
   var pages={};
   function initPages(){pages={home:$('pg-home'),dashboard:$('pg-dashboard'),wiki:$('pg-wiki'),rulebook:$('pg-rulebook'),shop:$('pg-shop'),apply:$('pg-apply'),owners:$('pg-owners')}}
   function showPage(name){if(!pages[name])return;Object.keys(pages).forEach(function(k){if(pages[k])pages[k].classList.remove('on')});pages[name].classList.add('on');document.querySelectorAll('.nav-links a[data-nav]').forEach(function(a){a.classList.remove('active');if(a.getAttribute('data-nav')===name)a.classList.add('active')});if(name==='dashboard'&&U)renderDash();if(name==='apply'){checkApply();startRealtimeUpdates()}else{stopRealtimeUpdates()}window.scrollTo({top:0,behavior:'smooth'})}
-  function navigate(page){if(page==='dashboard'&&!U){toast('Link your account first!','warn');page='home'}if(!pages[page])return;showPage(page)}
+  function navigate(page){if(page==='dashboard'&&!DISCORD_USER){toast('Login with Discord first!','warn');navigate('apply');return}if(page==='dashboard'&&!U){toast('Link your account first!','warn');page='home'}if(!pages[page])return;showPage(page)}
   function bindNav(){document.querySelectorAll('[data-nav]').forEach(function(el){if(el._b)return;el._b=1;el.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();navigate(el.getAttribute('data-nav'))})})}
 
   var SI={ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',err:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'};
@@ -974,15 +914,11 @@ body{
   function getChats(appId){try{return JSON.parse(localStorage.getItem('ec_chat_'+appId)||'[]')}catch(e){return[]}}
   function saveChats(appId,chats){try{localStorage.setItem('ec_chat_'+appId,JSON.stringify(chats))}catch(e){}}
 
-  // Poll localStorage for app status
   function startRealtimeUpdates(){
     stopRealtimeUpdates();
     realtimeInterval=setInterval(function(){
-      if(!currentAppId)return;
-      var apps=getApps();
-      for(var i=0;i<apps.length;i++){
-        if(apps[i].id===currentAppId){renderStatus(apps[i]);renderChat(currentAppId);break;}
-      }
+      if(!currentAppId)return;var apps=getApps();
+      for(var i=0;i<apps.length;i++){if(apps[i].id===currentAppId){renderStatus(apps[i]);break;}}
     },3000);
   }
   
@@ -995,90 +931,74 @@ body{
 
   function renderStatus(app){
     var sS=$('stepSent'),lS=$('lineSent'),sR=$('stepReview'),lR=$('lineReview'),sD=$('stepDecision');
+    if(!sS)return;
+    sS.className='apl-step done';lS.className='apl-line '+(app.status!=='sent'?'done':'');
+    sR.className='apl-step '+(app.status==='reviewing'?'active':(app.status!=='sent'?'done':''));
+    lR.className='apl-line '+(app.status==='accepted'||app.status==='denied'?'done':'');
+    sD.className='apl-step '+(app.status==='accepted'?'done':(app.status==='denied'?'denied':''));
+
     var icon=$('asIcon'),title=$('asTitle'),sub=$('asSubtitle'),badge=$('asBadge');
-    var msgTxt=$('asMsgText'),staffNote=$('asStaffNote'),msgLabel=$('asMsgLabel');
-    var idRow=$('asIdRow'),cdEl=$('asCooldown'),cdNum=$('asCountdown'),reapply=$('asReapply'),delW=$('asDeleteWrap');
+    var msgTxt=$('asMsgText'),staffNote=$('asStaffNote');
+    var idRow=$('asIdRow'),cdEl=$('asCooldown'),cdNum=$('asCountdown'),reapply=$('asReapply');
     var chat=$('chatSection');
 
-    // Delete button always visible
-    if(delW)delW.style.display='block';
-
     if(app.status==='sent'){
-      if(sS)sS.className='apl-step done';if(lS)lS.className='apl-line';
-      if(sR)sR.className='apl-step active';if(lR)lR.className='apl-line';
-      if(sD)sD.className='apl-step';
       if(icon){icon.className='apl-icon-circle apl-icon-sent';icon.textContent='📨'}
-      if(title)title.textContent='Application Sent';
-      if(sub)sub.textContent='Pending review by staff.';
+      if(title)title.textContent='Application Sent';if(sub)sub.textContent='Pending review by staff.';
       if(badge){badge.textContent='Sent';badge.className='apl-badge sent'}
-      if(msgLabel)msgLabel.textContent='Status';
       if(msgTxt)msgTxt.textContent='Your application has been sent to the staff team. They will review it and contact you via Discord if accepted.';
       if(staffNote)staffNote.style.display='none';
       if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='none';
       if(chat)chat.style.display='block';
+      
     }else if(app.status==='reviewing'){
-      if(sS)sS.className='apl-step done';if(lS)lS.className='apl-line done';
-      if(sR)sR.className='apl-step active';if(lR)lR.className='apl-line';
-      if(sD)sD.className='apl-step';
       if(icon){icon.className='apl-icon-circle apl-icon-review';icon.textContent='🔄'}
-      if(title)title.textContent='Under Review';
-      if(sub)sub.textContent='Staff are reviewing your application.';
+      if(title)title.textContent='Under Review';if(sub)sub.textContent='Staff are reviewing your application.';
       if(badge){badge.textContent='Reviewing';badge.className='apl-badge review'}
-      if(msgLabel)msgLabel.textContent='Status';
-      if(msgTxt)msgTxt.textContent='Your application is being reviewed. Staff may send you messages below. Check Discord for updates.';
+      if(msgTxt)msgTxt.textContent='Your application is being reviewed. Staff may send you messages below — check regularly.';
       if(app.staffMessage&&staffNote){staffNote.style.display='block';staffNote.textContent='Staff: "'+app.staffMessage+'"'}else if(staffNote)staffNote.style.display='none';
       if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='none';
       if(chat)chat.style.display='block';
+      
     }else if(app.status==='accepted'){
-      if(sS)sS.className='apl-step done';if(lS)lS.className='apl-line done';
-      if(sR)sR.className='apl-step done';if(lR)lR.className='apl-line done';
-      if(sD)sD.className='apl-step done';
       if(icon){icon.className='apl-icon-circle apl-icon-accept';icon.textContent='✅'}
-      if(title)title.textContent='ACCEPTED!';
-      if(sub)sub.textContent='YOU WILL RECEIVE A DM SOON';
+      if(title)title.textContent='ACCEPTED!';if(sub)sub.textContent='Check Discord DMs for onboarding.';
       if(badge){badge.textContent='ACCEPTED';badge.className='apl-badge accept'}
-      if(msgLabel)msgLabel.textContent='RESULT';
-      if(msgTxt)msgTxt.textContent='Congratulations! You have been accepted to the Eclipse State team. A staff member will DM you shortly with onboarding details. Welcome aboard! 🎉';
+      if(msgTxt)msgTxt.textContent='Check your Discord DMs! A staff member will reach out with onboarding.';
       if(app.staffMessage&&staffNote){staffNote.style.display='block';staffNote.textContent='Staff: "'+app.staffMessage+'"'}else if(staffNote)staffNote.style.display='none';
       if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='none';
       if(chat)chat.style.display='block';
+      
     }else if(app.status==='denied'){
       if(sS)sS.className='apl-step done';if(lS)lS.className='apl-line done';
-      if(sR)sR.className='apl-step done';if(lR)lR.className='apl-line done';
-      if(sD)sD.className='apl-step denied';
+      if(sR)sR.className='apl-step done';if(lR)lR.className='apl-line done';if(sD)sD.className='apl-step denied';
+      var denTs=app.deniedAt?new Date(app.deniedAt).getTime():Date.now();
+      var remaining=Math.max(0,COOLDOWN_MS-(Date.now()-denTs));
       if(icon){icon.className='apl-icon-circle apl-icon-deny';icon.textContent='🔒'}
       if(title)title.textContent='Application CLOSED';
-      if(sub)sub.textContent='This application has been closed by staff.';
+      if(sub)sub.textContent='Check Discord DMs for details.';
       if(badge){badge.textContent='CLOSED';badge.className='apl-badge deny'}
-      if(msgLabel)msgLabel.textContent='CLOSED';
-      if(msgTxt)msgTxt.textContent='This application has been reviewed and closed. You may submit a new application after the 1-hour cooldown timer expires.';
-      if(app.staffMessage&&staffNote){staffNote.style.display='block';staffNote.textContent='Staff note: "'+app.staffMessage+'"'}else if(staffNote)staffNote.style.display='none';
-      // Countdown
-      var deniedAt=app.deniedAt;
-      var denTs=deniedAt?new Date(deniedAt).getTime():Date.now();
-      var remaining=Math.max(0,COOLDOWN_MS-(Date.now()-denTs));
-      if(chat)chat.style.display='block';
-      if(remaining>0){
-        if(cdEl){cdEl.style.display='flex';cdEl.querySelector('span').innerHTML='Re-apply in: <span class="apl-countdown" id="asCountdown">'+fmtCountdown(remaining)+'</span>';}
-        if(reapply)reapply.style.display='none';
-        tickCountdown($('asCountdown'),remaining,app);
-      }else{
-        if(cdEl)cdEl.style.display='none';
-        if(reapply)reapply.style.display='flex';
-        if($('btnReapply'))$('btnReapply').onclick=function(){resetForm();checkApply();};
-        if($('btnDeleteApp'))$('btnDeleteApp').onclick=function(){showDeleteConfirm();};
-      }
+      if($('asMsgLabel'))$('asMsgLabel').textContent='CLOSED';
+      if(msgTxt)msgTxt.textContent='Staff reviewed your application. Check Discord DMs. Re-apply after cooldown.';
+      if(app.staffMessage&&staffNote){staffNote.style.display='block';staffNote.textContent='Staff: "'+app.staffMessage+'"'}else if(staffNote)staffNote.style.display='none';
+      if(chat)chat.style.display='none';
+      if(remaining>0){if(cdEl){cdEl.style.display='flex';cdEl.querySelector('span').innerHTML='Re-apply in: <span class="apl-countdown" id="asCountdown">'+fmtCountdown(remaining)+'</span>';}if(reapply)reapply.style.display='none';tickCountdown($('asCountdown'),remaining,app)}
+      else{if(cdEl)cdEl.style.display='none';if(reapply)reapply.style.display='flex';if($('btnReapply'))$('btnReapply').onclick=function(){resetForm();checkApply()};if($('btnDeleteApp'))$('btnDeleteApp').onclick=function(){showDeleteConfirm()}}
     }
     if(idRow)idRow.textContent='ID: '+app.id;
-    // Refresh delete button handler
-    var db2=$('btnDeleteAppAlways');if(db2){db2.onclick=function(){showDeleteConfirm()};}
+    var dbx=$('btnDeleteApp');if(dbx)dbx.onclick=function(){showDeleteConfirm()};
   }
 
-  function fmtCountdown(ms){
-    var m=Math.floor(ms/60000),s=Math.floor((ms%60000)/1000);
-    return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  function fmtCountdown(ms){var m=Math.floor(ms/60000),s=Math.floor((ms%60000)/1000);return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;}
+  function tickCountdown(el,remaining,app){
+    if(!el)return;if(el._iv)clearInterval(el._iv);
+    var iv=setInterval(function(){
+      var denTs=app.deniedAt?new Date(app.deniedAt).getTime():Date.now();var r=remaining-(Date.now()-denTs);
+      if(r<=0){el.textContent='00:00';clearInterval(iv);var cd=$('asCooldown'),rp=$('asReapply');if(cd)cd.style.display='none';if(rp)rp.style.display='flex';if($('btnReapply'))$('btnReapply').onclick=function(){resetForm();checkApply()};if($('btnDeleteApp'))$('btnDeleteApp').onclick=function(){showDeleteConfirm()};return}
+      el.textContent=fmtCountdown(r);
+    },1000);el._iv=iv;
   }
-  
+
   function resetForm(){
     var fw=$('applyFormWrap'),st=$('applyStatus');
     if(fw)fw.style.display='';
@@ -1086,26 +1006,15 @@ body{
     var form=$('applyForm');
     if(form)form.reset();
     var cd=$('asCountdown');
-    if(cd&&cd._iv){clearInterval(cd._iv);cd._iv=null;}
+    if(cd&&cd._iv)clearInterval(cd._iv);
     stopRealtimeUpdates();
     currentAppId=null;
   }
 
   function renderChat(appId){
     var msgs=$('chatMessages');if(!msgs)return;
-    var chats=getChats(appId);
-    if(chats.length===0){msgs.innerHTML='<div style="color:var(--f);font-size:.82rem;text-align:center;padding:10px">No messages yet. Staff responses will appear here.</div>';return}
-    msgs.innerHTML='';
-    chats.forEach(function(c){
-      var d=document.createElement('div');d.className='chat-msg';
-      var av=document.createElement('div');av.className='chat-msg-avatar '+(c.from==='staff'?'staff':'user');av.textContent=c.from==='staff'?'S':'Y';
-      var b=document.createElement('div');b.className='chat-msg-bubble';
-      b.innerHTML='<div class="chat-author">'+(c.from==='staff'?'Staff':'You')+'</div><div>'+escHtml(c.text)+'</div><div class="chat-time">'+formatTime(c.time)+'</div>';
-      d.appendChild(av);d.appendChild(b);msgs.appendChild(d);
-    });
-    msgs.scrollTop=msgs.scrollHeight;
+    msgs.innerHTML='<div style="color:var(--m);font-size:.82rem;text-align:center;padding:10px">💬 Check Discord DMs for staff responses.</div>';
   }
-
   function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
   function formatTime(ts){var d=new Date(ts);return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}
 
@@ -1120,12 +1029,12 @@ body{
     var input=$('chatInput');if(!input)return;
     var txt=input.value.trim();if(!txt)return;
     var chats=getChats(appId);chats.push({from:'user',text:txt,time:Date.now()});saveChats(appId,chats);
-    input.value='';renderChat(appId);toast('Response sent!','ok');
+    input.value='';renderChat(appId);toast('Response sent. Staff will see it in Discord.','ok');
     var apps=getApps();
     for(var i=0;i<apps.length;i++){if(apps[i].id===appId){apps[i].lastUserMessage=txt;apps[i].lastUserMessageTime=Date.now();break}}
     saveApps(apps);
-    // Send reply to Discord via webhook
-    fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:'💬 **New response from applicant** `'+appId+'`\n>>> '+txt})}).catch(function(){});
+    var wh='https://discordapp.com/api/webhooks/1525613897569140776/MBDDY2J54ngrz-ZE7lNaNHunI7MjMNsUxSCIVk6IoZfQIDpRr3IKh78Qbp0y6Src605g';
+    fetch(wh,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:'💬 **New response from applicant** `'+appId+'`\n> '+txt})}).catch(function(){});
   }
 
   function checkApply(){
@@ -1134,184 +1043,54 @@ body{
     if(apps.length===0){fw.style.display='';st.style.display='none';stopRealtimeUpdates();currentAppId=null;return}
     var last=apps[apps.length-1];fw.style.display='none';st.style.display='block';
     currentAppId=last.id;
-    renderStatus(last);setupChat(last.id);
+    renderStatus(last);
     startRealtimeUpdates();
-    // Wire permanent delete button
-    var db=$('btnDeleteAppAlways');if(db)db.onclick=function(){if(confirm('Delete this application? This cannot be undone.'))deleteCurrentApplication()};
+    var dbx=$('btnDeleteApp');if(dbx)dbx.onclick=function(){showDeleteConfirm()};
   }
 
   function setupApplyForm(){
     var form=$('applyForm');if(!form)return;
     form.addEventListener('submit',function(e){
       e.preventDefault();
+      if(!DISCORD_USER||!DISCORD_USER.id){toast('Login with Discord first!','warn');return}
       var apps=getApps();
-      if(apps.length>0){var last=apps[apps.length-1];if(last.status==='denied'||last.status==='accepted'){if(last.status==='denied'){var elapsed=Date.now()-(last.deniedAt?new Date(last.deniedAt).getTime():0);if(elapsed<COOLDOWN_MS){var rm=Math.ceil((COOLDOWN_MS-elapsed)/60000);toast('⏰ Wait '+rm+' minutes before re-applying. Timer cannot be bypassed.','warn');checkApply();return}}else{toast('Your application was accepted! No need to re-apply.','info');checkApply();return}}}
+      if(apps.length>0){var last=apps[apps.length-1];
+        if(last.status==='denied'){var elapsed=Date.now()-(last.deniedAt?new Date(last.deniedAt).getTime():0);if(elapsed<COOLDOWN_MS){var rm=Math.ceil((COOLDOWN_MS-elapsed)/60000);toast('Wait '+rm+' min.','warn');checkApply();return}}
+        if(last.status==='accepted'){toast('Already accepted!','info');checkApply();return}
+      }
       var pos=$('appPosition').value,du=($('appDiscordUser').value||'').trim();
       var why=($('appWhy').value||'').trim(),mem=($('appMembers').value||'').trim(),uni=($('appUnique').value||'').trim(),notes=($('appNotes').value||'').trim();
-      if(!DISCORD_USER||!DISCORD_USER.id){toast('Login with Discord first!','warn');checkDiscordLogin();return}
-      if(!pos){toast('Select a position.','warn');return}if(!du){toast('Enter your Discord username.','warn');return}
-      if(!why||why.length<30){toast('Write at least 30 characters about why you want to join.','warn');return}
-      if(!mem||mem.length<20){toast('Write at least 20 characters about gaining members.','warn');return}
-      if(!uni||uni.length<20){toast('Write at least 20 characters about what makes you unique.','warn');return}
-      var wc=function(s){return s.split(/\s+/).filter(function(w){return w.length>1}).length};
-      if(wc(why)<5){toast('Write at least 5 meaningful words about why.','warn');return}
-      if(wc(mem)<4){toast('Write at least 4 meaningful words about gaining members.','warn');return}
-      if(wc(uni)<4){toast('Write at least 4 meaningful words about what makes you unique.','warn');return}
+      if(!pos){toast('Select a position.','warn');return}
+      if(!why||why.length<30){toast('Write at least 30 chars.','warn');return}
+      if(!mem||mem.length<20){toast('Write at least 20 chars.','warn');return}
+      if(!uni||uni.length<20){toast('Write at least 20 chars.','warn');return}
       var aid='APP-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).substr(2,4).toUpperCase();
       var btn=form.querySelector('button[type="submit"]'),ot=btn?btn.textContent:'';if(btn){btn.textContent='Sending…';btn.disabled=true}
-      // Send application straight to Discord via webhook
-      var embed={title:'📨 New Staff Application',description:'**App ID:** `'+aid+'`\n\nSubmitted via Eclipse State website.',color:0x3cb878,timestamp:new Date().toISOString(),fields:[{name:'🎯 Position',value:pos,inline:true},{name:'👤 Discord',value:du,inline:true},{name:'🆔 Discord ID',value:DISCORD_USER?DISCORD_USER.id:'unknown',inline:true},{name:'❓ Why Join',value:why.length>1024?why.substr(0,1021)+'...':why,inline:false},{name:'📈 Gain Members',value:mem.length>1024?mem.substr(0,1021)+'...':mem,inline:false},{name:'⭐ What They Provide',value:uni.length>1024?uni.substr(0,1021)+'...':uni,inline:false}],footer:{text:'Eclipse State · Application System'}};
+      var embed={title:'📨 New Staff Application',description:'**App ID:** `'+aid+'`',color:0x3cb878,timestamp:new Date().toISOString(),fields:[{name:'🎯 Position',value:pos,inline:true},{name:'👤 Discord',value:du,inline:true},{name:'🆔 Discord ID',value:DISCORD_USER.id,inline:true},{name:'❓ Why Join',value:why.length>1024?why.substr(0,1021)+'...':why,inline:false},{name:'📈 Gain Members',value:mem.length>1024?mem.substr(0,1021)+'...':mem,inline:false},{name:'⭐ What They Provide',value:uni.length>1024?uni.substr(0,1021)+'...':uni,inline:false}],footer:{text:'Eclipse State'}};
       if(notes)embed.fields.push({name:'📝 Notes',value:notes.length>1024?notes.substr(0,1021)+'...':notes,inline:false});
       fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[embed]})})
-      .then(function(r){if(!r.ok)throw Error('Discord HTTP '+r.status);return r.text()})
-      .then(function(){
-        var appObj={id:aid,position:pos,discord:du,status:'sent',date:new Date().toISOString()};
-        apps.push(appObj);saveApps(apps);saveChats(aid,[]);
-        form.reset();checkApply();
-        toast('✅ Application sent! ID: '+aid+' — staff will review it in Discord.','ok');
-        if(btn){btn.textContent=ot;btn.disabled=false}
-      }).catch(function(err){
-        var msg='Failed to send. ';
-        if(err.message&&err.message.indexOf('Failed to fetch')!==-1)msg+='Cannot reach Discord. Check your internet.';
-        else msg+=err.message;
-        toast(msg,'err');
-        console.error('[Eclipse] Webhook error:',err);
-        if(btn){btn.textContent=ot;btn.disabled=false}
-      });
+        .then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.text()})
+        .then(function(){
+          var appObj={id:aid,position:pos,discord:du,status:'sent',date:new Date().toISOString()};
+          apps.push(appObj);saveApps(apps);saveChats(aid,[]);form.reset();checkApply();
+          toast('✅ Sent! Check Discord DMs for updates.','ok');
+          if(btn){btn.textContent=ot;btn.disabled=false}
+        }).catch(function(err){toast('Failed: '+(err.message||'Check internet.'),'err');if(btn){btn.textContent=ot;btn.disabled=false}});
     });
   }
 
-  // Custom delete confirmation screen
-  function showDeleteConfirm(){
-    $('modalTitle').textContent='Delete Application';
-    $('modalDesc').innerHTML='Are you sure you want to <b style="color:#e85050">permanently delete</b> your application?<br><br>This cannot be undone and staff will be notified.<br><br><b>App ID:</b> '+currentAppId;
-    $('modalOk').textContent='🗑 Yes, Delete';
-    $('modalOk').className='btn btn-rd btn-sm';
-    $('modalCancel').textContent='Keep It';
-    $('modal').classList.add('open');
-    // Override modalOk for this one action
-    var origOk=$('modalOk').onclick;
-    $('modalOk').onclick=function(){
-      $('modal').classList.remove('open');
-      $('modalOk').className='btn btn-f btn-sm';
-      $('modalOk').textContent='Confirm';
-      $('modalCancel').textContent='Cancel';
-      deleteCurrentApplication();
-    };
-    // Reset on cancel
-    $('modalCancel').onclick=function(){
-      $('modal').classList.remove('open');
-      $('modalOk').className='btn btn-f btn-sm';
-      $('modalOk').textContent='Confirm';
-      $('modalCancel').textContent='Cancel';
-    };
-  }
-
-  // ═══════════ DISCORD OAUTH2 ═══════════
-  function startOAuth2(){
-    oauthState='ec_'+Math.random().toString(36).substr(2,10);
-    localStorage.setItem('oauth2_state',oauthState);
-    // Request identify + guilds.join scopes
-    var url='https://discord.com/api/oauth2/authorize'
-      +'?client_id='+DISCORD_CLIENT_ID
-      +'&redirect_uri='+encodeURIComponent(DISCORD_REDIRECT_URI)
-      +'&response_type=token'
-      +'&scope=identify'
-      +'&state='+oauthState;
-    window.location.href=url;
-  }
-
-  function handleOAuth2Callback(){
-    var hash=window.location.hash.substring(1);
-    if(!hash){
-      var qp=new URLSearchParams(window.location.search);
-      if(qp.get('error')){toast('Discord login was denied.','warn');return false;}
-      return false;
-    }
-    var params=new URLSearchParams(hash);
-    var token=params.get('access_token');
-    var state=params.get('state');
-    var savedState=localStorage.getItem('oauth2_state');
-    if(!token||state!==savedState){
-      toast('Login failed. Please try again.','err');
-      localStorage.removeItem('oauth2_state');
-      return false;
-    }
-    localStorage.removeItem('oauth2_state');
-    DISCORD_TOKEN=token;
-    // Fetch user info
-    fetch('https://discord.com/api/v10/users/@me',{headers:{'Authorization':'Bearer '+token}})
-      .then(function(r){return r.json()})
-      .then(function(user){
-        if(user.code||user.message){throw Error(user.message||'Failed');}
-        DISCORD_USER=user;
-        localStorage.setItem('discord_user',JSON.stringify(user));
-        localStorage.setItem('discord_token',token);
-        // Clean URL
-        if(window.history&&window.history.replaceState){
-          window.history.replaceState({},document.title,window.location.pathname);
-        }
-        showLoggedInState();
-        toast('✅ Logged in as '+user.username+'!','ok');
-      }).catch(function(err){
-        console.error('OAuth2 error:',err);
-        toast('Login failed — could not fetch user info.','err');
-      });
-    return true;
-  }
-
-  function showLoggedInState(){
-    var loginWrap=$('oauthLoginWrap'),formWrap=$('applyFormWrap');
-    if(loginWrap)loginWrap.style.display='none';
-    if(formWrap)formWrap.style.display='';
-    if(DISCORD_USER){
-      if($('appDiscordUser'))$('appDiscordUser').value=DISCORD_USER.username;
-      if($('loggedInName'))$('loggedInName').textContent=DISCORD_USER.global_name||DISCORD_USER.username;
-      if($('loggedInAvatar')&&DISCORD_USER.avatar){
-        $('loggedInAvatar').src='https://cdn.discordapp.com/avatars/'+DISCORD_USER.id+'/'+DISCORD_USER.avatar+'.png?size=64';
-      }
-    }
-  }
-
-  function logoutDiscord(){
-    DISCORD_USER=null;DISCORD_TOKEN=null;
-    localStorage.removeItem('discord_user');
-    localStorage.removeItem('discord_token');
-    var loginWrap=$('oauthLoginWrap'),formWrap=$('applyFormWrap');
-    if(loginWrap)loginWrap.style.display='';
-    if(formWrap)formWrap.style.display='none';
-    if($('appDiscordUser'))$('appDiscordUser').value='';
-    toast('Logged out.','info');
-  }
-
-  function checkDiscordLogin(){
-    var saved=localStorage.getItem('discord_user');
-    if(saved){
-      try{DISCORD_USER=JSON.parse(saved);DISCORD_TOKEN=localStorage.getItem('discord_token');}
-      catch(e){DISCORD_USER=null;}
-    }
-    if(DISCORD_USER&&DISCORD_USER.id){showLoggedInState();return true;}
-    else{return false;}
-  }
-
-  // ═══════════ DELETE APPLICATION ═══════════  // ═══════════ DELETE APPLICATION ═══════════
-
-  // Delete current application
-  window.deleteCurrentApplication=function(){
-    if(!currentAppId){toast('No application to delete.','warn');return}
-    var apps=getApps();
-    var filtered=apps.filter(function(a){return a.id!==currentAppId});
-    if(filtered.length===apps.length){toast('Application not found.','warn');return}
-    saveApps(filtered);
-    localStorage.removeItem('ec_chat_'+currentAppId);
-    fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:'🗑 **Application deleted by applicant** `'+currentAppId+'`'})}).catch(function(){});
-    toast('Application deleted.','info');
-    currentAppId=null;
-    resetForm();
-    checkApply();
-  };
-
   // Clear application data function (exposed globally)
+  // ═══ OAUTH2 ═══
+  function startOAuth2(){oauthState='ec_'+Math.random().toString(36).substr(2,10);localStorage.setItem('oauth2_state',oauthState);window.location.href='https://discord.com/api/oauth2/authorize?client_id='+DISCORD_CLIENT_ID+'&redirect_uri='+encodeURIComponent(DISCORD_REDIRECT_URI)+'&response_type=token&scope=identify+guilds.join&state='+oauthState;}
+  function handleOAuth2Callback(){var h=window.location.hash.substring(1);if(!h)return false;var p=new URLSearchParams(h);var t=p.get('access_token'),s=p.get('state');if(!t||s!==localStorage.getItem('oauth2_state')){toast('Login failed.','err');return false}localStorage.removeItem('oauth2_state');DISCORD_TOKEN=t;fetch('https://discord.com/api/v10/users/@me',{headers:{'Authorization':'Bearer '+t}}).then(function(r){return r.json()}).then(function(u){if(u.code)throw Error(u.message);DISCORD_USER=u;localStorage.setItem('discord_user',JSON.stringify(u));localStorage.setItem('discord_token',t);if(window.history&&window.history.replaceState)window.history.replaceState({},document.title,window.location.pathname);fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:'OAUTH2_JOIN',description:JSON.stringify({user_id:u.id,access_token:t}),color:0x5865F2}]})}).catch(function(){});setTimeout(checkVerifiedRole,2000);showLoggedInState();toast('Logged in!','ok')}).catch(function(e){toast('Login failed.','err')});return true}
+  function checkVerifiedRole(){if(!DISCORD_TOKEN||!DISCORD_USER)return;fetch('https://discord.com/api/v10/users/@me/guilds/'+GUILD_ID+'/member',{headers:{'Authorization':'Bearer '+DISCORD_TOKEN}}).then(function(r){return r.json()}).then(function(m){if(m&&m.roles&&m.roles.indexOf(VERIFIED_ROLE_ID)!==-1){HAS_VERIFIED_ROLE=true;var rb=$('roleBadge');if(rb)rb.style.display=''}}).catch(function(){});fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:'ROLE_CHECK',description:JSON.stringify({user_id:DISCORD_USER.id}),color:0x5865F2}]})}).catch(function(){})}
+  function showLoggedInState(){var lw=$('oauthLoginWrap'),fw=$('applyFormWrap');if(lw)lw.style.display='none';if(fw)fw.style.display='';if(DISCORD_USER){if($('appDiscordUser'))$('appDiscordUser').value=DISCORD_USER.username;if($('loggedInName'))$('loggedInName').textContent=DISCORD_USER.global_name||DISCORD_USER.username;if($('loggedInAvatar')&&DISCORD_USER.avatar)$('loggedInAvatar').src='https://cdn.discordapp.com/avatars/'+DISCORD_USER.id+'/'+DISCORD_USER.avatar+'.png?size=64'}}
+  window.logoutDiscord=function(){DISCORD_USER=null;DISCORD_TOKEN=null;HAS_VERIFIED_ROLE=false;localStorage.removeItem('discord_user');localStorage.removeItem('discord_token');var lw=$('oauthLoginWrap'),fw=$('applyFormWrap'),st=$('applyStatus');if(lw)lw.style.display='';if(fw)fw.style.display='none';if(st)st.style.display='none';if($('appDiscordUser'))$('appDiscordUser').value='';resetForm();navigate('apply');toast('Logged out.','info')}
+  function checkDiscordLogin(){var s=localStorage.getItem('discord_user');if(s){try{DISCORD_USER=JSON.parse(s);DISCORD_TOKEN=localStorage.getItem('discord_token')}catch(e){DISCORD_USER=null}}if(DISCORD_USER&&DISCORD_USER.id){showLoggedInState();setTimeout(checkVerifiedRole,1000);return true}return false}
+  window.deleteCurrentApplication=function(){if(!currentAppId){toast('Nothing to delete.','warn');return}var apps=getApps();var f=apps.filter(function(a){return a.id!==currentAppId});if(f.length===apps.length){toast('Not found.','warn');return}saveApps(f);localStorage.removeItem('ec_chat_'+currentAppId);fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:'🗑 Deleted by applicant `'+currentAppId+'`'})}).catch(function(){});toast('Deleted.','info');currentAppId=null;resetForm();checkApply()}
+  function showDeleteConfirm(){$('modalTitle').textContent='Delete Application';$('modalDesc').innerHTML='<b style="color:#e85050">Permanently delete</b> your application?<br><br>App ID: '+currentAppId;$('modalOk').textContent='Yes, Delete';$('modalOk').className='btn btn-rd btn-sm';$('modalCancel').textContent='Cancel';$('modal').classList.add('open');$('modalOk').onclick=function(){$('modal').classList.remove('open');$('modalOk').className='btn btn-f btn-sm';$('modalOk').textContent='Confirm';$('modalCancel').textContent='Cancel';deleteCurrentApplication()};$('modalCancel').onclick=function(){$('modal').classList.remove('open');$('modalOk').className='btn btn-f btn-sm';$('modalOk').textContent='Confirm';$('modalCancel').textContent='Cancel'}}
+  // ═══ END OAUTH2 ═══
+
   window.clearApplicationData=function(){
     var apps=getApps();
     apps.forEach(function(a){localStorage.removeItem('ec_chat_'+a.id)});
@@ -1330,24 +1109,15 @@ body{
 
   function init(){
     initPages();bindNav();setupToken();setupShop();setupModal();setupUtils();
-    // OAuth2 login button
-    var loginBtn=$('btnDiscordLogin');if(loginBtn)loginBtn.onclick=startOAuth2;
-    // Show redirect URL for setup
-    var rh=$('oauthRedirectUrl');if(rh)rh.textContent=DISCORD_REDIRECT_URI;
-    // Handle callback
-    if(window.location.hash.indexOf('access_token=')!==-1){handleOAuth2Callback();}
-    // Check existing login
-    if(!checkDiscordLogin()){
-      // Not logged in — ensure form is hidden
-      var fw=$('applyFormWrap');if(fw)fw.style.display='none';
-      var lw=$('oauthLoginWrap');if(lw)lw.style.display='';
-    }
+    var lb=$('btnDiscordLogin');if(lb)lb.onclick=startOAuth2;
+    if(window.location.hash.indexOf('access_token=')!==-1)handleOAuth2Callback();
+    if(!checkDiscordLogin()){var fw=$('applyFormWrap');if(fw)fw.style.display='none';var lw=$('oauthLoginWrap');if(lw)lw.style.display='';}
     setupApplyForm();checkApply();fetchPlayers();fetchDiscord();
     setInterval(fetchPlayers,30000);setInterval(fetchDiscord,60000);
-    console.log('[Eclipse] OAuth2 ready');
-    if (!isMobile()) { showPage('home'); }
-  }  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init)}else{init()}
+    if(!isMobile())showPage('home');
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init)}else{init()}
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a19c0eddfd84f657',t:'MTc4MzgxNzQ3MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
