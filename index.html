@@ -561,7 +561,7 @@ body{
   <p class="mb-info" style="margin-top:12px">Auto-joins our Discord • Verified role • Dashboard access</p>
 </div>
 <div class="scene" aria-hidden="true">
-  <video autoplay loop playsinline id="bgVideo" style="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.35">
+  <video autoplay muted loop playsinline id="bgVideo" style="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.35">
     <source src="https://raw.githubusercontent.com/CrystalizedHub/EclipseState/main/source.mp4" type="video/mp4">
   Your browser does not support the video tag.
   </video>
@@ -843,11 +843,11 @@ body{
 <div class="mm" id="modal"><div class="mb"><h3 id="modalTitle">Confirm</h3><p id="modalDesc"></p><div class="mba"><button class="btn btn-s btn-sm" id="modalCancel">Cancel</button><button class="btn btn-f btn-sm" id="modalOk">Confirm</button></div></div></div>
 <div class="tr2" id="toastRack"></div>
 <div id="musicPlayer" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:rgba(0,0,0,.9);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(20px);box-shadow:0 4px 24px rgba(0,0,0,.8)">
-  <button onclick="toggleMusic()" id="musicBtn" style="background:none;border:none;color:#fff;cursor:pointer;font-size:1.2rem;padding:0;display:flex;align-items:center;justify-content:center;width:28px;height:28px">
+  <button id="musicBtn" style="background:none;border:none;color:#fff;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;width:28px;height:28px">
     <svg id="musicIconPlay" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
     <svg id="musicIconPause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
   </button>
-  <input type="range" id="musicVolume" min="0" max="100" value="30" oninput="changeVolume(this.value)" style="width:80px;accent-color:#fff;cursor:pointer">
+  <input type="range" id="musicVolume" min="0" max="100" value="25" oninput="setVolume(this.value)" style="width:80px;accent-color:#fff;cursor:pointer">
   <span style="color:#999;font-size:.7rem;white-space:nowrap">Teck Hustlin' Ways</span>
 </div>
 <audio id="bgMusic" loop preload="auto" style="display:none">
@@ -863,31 +863,30 @@ body{
   }
 
   // Music player
-  var musicPlaying=false;
-  window.toggleMusic=function(){
-    var audio=document.getElementById('bgMusic');
-    var playIcon=document.getElementById('musicIconPlay');
-    var pauseIcon=document.getElementById('musicIconPause');
-    if(musicPlaying){audio.pause();if(playIcon)playIcon.style.display='';if(pauseIcon)pauseIcon.style.display='none';musicPlaying=false;}
-    else{audio.play().catch(function(){});if(playIcon)playIcon.style.display='none';if(pauseIcon)pauseIcon.style.display='';musicPlaying=true;}
-  };
-  window.changeVolume=function(v){var audio=document.getElementById('bgMusic');if(audio)audio.volume=v/100;};
-  // Attempt autoplay on first click
-  // Music player init with aggressive autoplay
-  var bgAudio=document.getElementById('bgMusic');
-  if(bgAudio){bgAudio.volume=0.25;bgAudio.loop=true;var volSlider=document.getElementById('musicVolume');if(volSlider)volSlider.value=25;}
-  // Try autoplay immediately + on any interaction
-  function tryPlayMusic(){
-    if(!musicPlaying&&bgAudio){bgAudio.play().then(function(){musicPlaying=true;var p=document.getElementById('musicIconPlay');var q=document.getElementById('musicIconPause');if(p)p.style.display='none';if(q)q.style.display='';}).catch(function(){});}
+  var musicPlaying=false,bgAudio=null;
+  (function setupMusic(){
+    bgAudio=document.getElementById('bgMusic');
+    if(!bgAudio){bgAudio=new Audio();bgAudio.id='bgMusic';bgAudio.loop=true;bgAudio.preload='auto';document.body.appendChild(bgAudio);}
+    bgAudio.src='https://raw.githubusercontent.com/CrystalizedHub/EclipseState/main/source.mp4';
+    bgAudio.volume=0.25;var vs=document.getElementById('musicVolume');if(vs)vs.value=25;
+    // Wire button
+    var btn=document.getElementById('musicBtn');if(btn)btn.addEventListener('click',toggleMusic);
+    // Try autoplay
+    bgAudio.play().then(function(){musicPlaying=true;swapIcons(true);}).catch(function(){});
+    document.addEventListener('click',function once(){if(!musicPlaying)bgAudio.play().then(function(){musicPlaying=true;swapIcons(true);}).catch(function(){});},{once:true});
+  })();
+  function swapIcons(playing){
+    var p=document.getElementById('musicIconPlay'),q=document.getElementById('musicIconPause');
+    if(playing){if(p)p.style.display='none';if(q)q.style.display='';}else{if(p)p.style.display='';if(q)q.style.display='none';}
   }
-  tryPlayMusic();
-  document.addEventListener('click',tryPlayMusic,{once:true});
-  document.addEventListener('touchstart',tryPlayMusic,{once:true});
-  document.addEventListener('keydown',tryPlayMusic,{once:true});
-  // Also try on load complete
-  window.addEventListener('load',tryPlayMusic);
-  // Stars/sparkles
-  (function(){var sb=document.getElementById('sparkleBox');var stb=document.getElementById('starBox');
+  function toggleMusic(){
+    if(!bgAudio){bgAudio=document.getElementById('bgMusic');if(!bgAudio)return;}
+    if(musicPlaying){bgAudio.pause();musicPlaying=false;swapIcons(false);}
+    else{bgAudio.play().then(function(){musicPlaying=true;swapIcons(true);}).catch(function(){});}
+  }
+  window.setVolume=function(v){if(bgAudio)bgAudio.volume=v/100;if(!bgAudio){bgAudio=document.getElementById('bgMusic');if(bgAudio)bgAudio.volume=v/100;}};
+  window.toggleMusic=toggleMusic;
+    (function(){var sb=document.getElementById('sparkleBox');var stb=document.getElementById('starBox');
     if(sb)for(var i=0;i<60;i++){var s=document.createElement('div');s.className='sparkle-dot';s.style.left=(3+Math.random()*94)+'%';s.style.bottom=(2+Math.random()*38)+'%';s.style.width=s.style.height=(1+Math.random()*3)+'px';s.style.setProperty('--d',(2+Math.random()*5)+'s');s.style.setProperty('--dl',Math.random()*6+'s');sb.appendChild(s)}
     if(stb)for(var j=0;j<45;j++){var st=document.createElement('div');st.className='star';st.style.left=Math.random()*100+'%';st.style.top=Math.random()*52+'%';st.style.width=st.style.height=(.8+Math.random()*2.2)+'px';st.style.setProperty('--d',(3+Math.random()*6)+'s');st.style.setProperty('--dl',Math.random()*8+'s');stb.appendChild(st)}
   })();
@@ -1113,4 +1112,4 @@ body{
   // Cross-tab logout sync
   window.addEventListener('storage',function(e){if(e.key==='discord_user'&&!e.newValue){DISCORD_USER=null;DISCORD_TOKEN=null;HAS_VERIFIED_ROLE=false;updateHomeLogin();updateMobileLogin();updateDashFromDiscord();}});
 })();
-</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1ba4c741f9d6553',t:'MTc4NDEzNDU2Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1ba53539a07ede2',t:'MTc4NDEzNDg0OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
